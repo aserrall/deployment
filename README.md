@@ -6,3 +6,7 @@ LikeMe project's repository
   - Joel
   - Lidia
   - Víctor
+  - Profesora: Carme
+  .
+  
+  
