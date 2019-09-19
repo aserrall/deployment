@@ -2,7 +2,8 @@
 LikeMe project's repository
 
   - Andreu
-  - Miki
   - Joel
   - Lidia
   - Víctor
+  
+   - Miki
