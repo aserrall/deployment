@@ -1,1 +1,21 @@
-register
+{% block title %} Registrar-se {% endblock %}
+
+{% block content %}
+    
+    <h1>Crear una conta<h1>
+    <form action="" method="POST">
+	{% csrf_token %}
+	{% for field in form %}
+	
+	{{ field.label_tag }}<br>
+	{{ field }}
+	{% endfor %}
+
+	<label for="n_tel">Numero de telefon: </label>
+	<input id="n_tel" type"text" name="n_tel" value="{{ c_tel }}">
+	<input type="submit" value="Registrarse">
+
+    </form>
+{% endblock %}
+
+
