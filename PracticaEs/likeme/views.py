@@ -7,7 +7,9 @@ from django.contrib import auth
 from django import forms
 from django.contrib.auth.models import User
 from .forms import *
+from django.contrib.auth import authenticate, login
 import datetime
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -19,24 +21,22 @@ def register(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
-            
             new_user = form.save()
             dAniversari = datetime.date(
-                    int(request.POST['anyNeixement_year']),
-                    int(request.POST['anyNeixement_month']),
-                    int(request.POST['anyNeixement_day']))
+                int(request.POST['anyNeixement_year']),
+                int(request.POST['anyNeixement_month']),
+                int(request.POST['anyNeixement_day']))
             sex = request.POST['choice']
             nTel = request.POST['n_tel']
-            
-            Client.objects.create(user=new_user, sexo = sex, dataAniversari = dAniversari, numTelefon=nTel)
+
+            login(request, new_user)
+            Client.objects.create(user=new_user, sexo=sex, dataAniversari=dAniversari, numTelefon=nTel)
             return HttpResponseRedirect(reverse("index"))
     else:
         form = SignupForm()
-    return render(request, "registration/register.html", {'form':form,})
+    return render(request, "registration/register.html", {'form': form, })
 
-def login_view(request):
-    pass
 
+@login_required()
 def logout_view(request):
     pass
-
