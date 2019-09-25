@@ -3,22 +3,20 @@
 
 <link rel="stylesheet"
 href="{% static 'css/style.css' %}" />
-{% block title %} Registrar-se {% endblock %}
 
 {% block content %}
     
-    <h1>Crear una conta<h1>
+
     <form action="" method="POST">
 	{% csrf_token %}
 	{% for field in form %}
-	
-	{{ field.label_tag }}<br>
-	{{ field }}
+		<ul><label>{{ field.label_tag }}<br>
+	{{ field }}</label></ul>
 	{% endfor %}
 
-	<label for="n_tel">Numero de telefon: </label>
-	<input id="n_tel" type"text" name="n_tel" value="{{ c_tel }}">
-	<input type="submit" value="Registrarse">
+		<ul><label for="n_tel">Número de telèfon: </label></ul>
+		<ul><input id="n_tel" type"text" name="n_tel" value="{{ c_tel }}"></ul>
+		<ul><input type="submit" value="Registrar-me"></ul>
 
     </form>
 {% endblock %}

@@ -12,7 +12,6 @@ href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" ></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -27,18 +26,42 @@ href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'index' %}">INICIO</a>
+        <a class="nav-link" href="{% url 'index' %}">INICI</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link"  href="{% url 'register' %}"> REGISTRO</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'login' %}">LOGIN</a>
-      </li>
+      <ul &nbsp;></ul>
+      {% if user.is_authenticated %}
+        <li>{{user.username}}</li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}" name="logout">LOG OUT</a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}" name="register">REGISTRAR-ME</a>
+          </li>
+        <ul &nbsp;></ul>
+        <!--AMB LINK-->
+        <!--<li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}" name="login">LOG IN</a>
+        </li>-->
+        <!--AMB FORM DIRECTAMENT SOBRE LA BARRA-->
+        <form action="" method="post">
+          {% csrf_token %}
+          <label for="username">USUARI:</label>
+            <input type="text" name="username" value="" id="username">
+          <label for="password">PASSWORD:</label>
+            <input type="password" name="password" value="" id="password">
+            <input type="hidden" name="next" value="{{ next|escape }}" />
+          <input type="submit" value="login" />
+        </form>
+      {% endif %}
     </ul>
   </div>
 </nav>
 </section>
-{% block content %}<!-- default content text (typically empty) -->{% endblock %}
+<div>
+&nbsp;&nbsp;
+  {% block content %}
+  {% endblock %}
+</div>
 </body>
 </html>

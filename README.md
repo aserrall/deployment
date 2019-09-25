@@ -3,7 +3,7 @@ LikeMe project's repository
 
   - Andreu
   - Joel
-  - Lidia
+  - Lydia
   - Víctor
   - Miki
   - Profesora: Carme
