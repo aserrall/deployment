@@ -8,4 +8,6 @@ urlpatterns = [
     path(r'accounts/login/', login, name='login'),
     path(r'accounts/logout/', logout, {'next_page': '/'}, name='logout'),
 
+    path(r'foro/', views.forum, name='forum'),
+
     ]

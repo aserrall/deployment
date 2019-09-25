@@ -31,12 +31,13 @@ def register(request):
 
             login(request, new_user)
             Client.objects.create(user=new_user, sexo=sex, dataAniversari=dAniversari, numTelefon=nTel)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("forum"))
     else:
         form = SignupForm()
     return render(request, "registration/register.html", {'form': form, })
 
 
 @login_required()
-def logout_view(request):
-    pass
+def forum(request):
+    context = {}
+    return render(request, 'likeme/foro.html', context)

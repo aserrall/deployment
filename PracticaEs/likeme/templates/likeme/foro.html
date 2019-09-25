@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+    <h1>You are logged in as: {{ user }}</h1>
+    <br><a href="{% url 'logout' %}"> logout</a>
 
 </body>
 </html>
