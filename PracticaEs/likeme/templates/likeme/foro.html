@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>You are logged in as: {{ user }}</h1>
-    <br><a href="{% url 'logout' %}"> logout</a>
+{% extends "likeme/BaseLayout.html" %}
+{% load static %}
 
-</body>
-</html>
+<link rel="stylesheet"
+href="{% static 'css/style.css' %}" />
+
+{% block content %}
+
+    <h1>You are logged in as: {{ user }}</h1>
+    <ul><br><a href="{% url 'logout' %}"> logout</a></ul>
+
+{% endblock %}
