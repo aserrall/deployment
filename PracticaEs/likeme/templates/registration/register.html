@@ -5,7 +5,6 @@
 href="{% static 'css/style.css' %}" />
 
 {% block content %}
-    
 
     <form action="" method="POST">
 	{% csrf_token %}
@@ -13,6 +12,7 @@ href="{% static 'css/style.css' %}" />
 		<ul><label>{{ field.label_tag }}<br>
 	{{ field }}</label></ul>
 	{% endfor %}
+		<!--{{ form.as_p }}-->
 
 		<ul><label for="n_tel">Número de telèfon: </label></ul>
 		<ul><input id="n_tel" type"text" name="n_tel" value="{{ c_tel }}"></ul>

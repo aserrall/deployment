@@ -15,8 +15,9 @@ h1 {
 	text-transform: uppercase;
 }
 nav {
-  background-color:#0b498f;
+	background-color: #0b498f;
 	color: white;
+	text-transform: uppercase;
 }
 
 
