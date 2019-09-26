@@ -30,7 +30,7 @@ href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min
       </li>
       <ul &nbsp;></ul>
       {% if user.is_authenticated %}
-        <li>{{user.username}}</li>
+        <li>{{user}}</li>
       <ul &nbsp;></ul>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'logout' %}" name="logout">LOG OUT</a>
@@ -41,11 +41,11 @@ href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min
           </li>
         <ul &nbsp;></ul>
         <!--AMB LINK-->
-        <li class="nav-item">
+        <!--<li class="nav-item">
           <a class="nav-link" href="{% url 'login' %}" name="login">LOG IN</a>
-        </li>
+        </li>-->
         <!--AMB FORM DIRECTAMENT SOBRE LA BARRA-->
-        <!--<form action="" method="post">
+        <form class="navbar-form" action="{% url 'login' %}" method="post">
           {% csrf_token %}
           <label for="username">USUARI:</label>
             <input type="text" name="username" value="" id="username">
@@ -53,7 +53,7 @@ href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min
             <input type="password" name="password" value="" id="password">
             <input type="hidden" name="next" value="{{ next|escape }}" />
           <input type="submit" value="login" />
-        </form>-->
+        </form>
       {% endif %}
     </ul>
   </div>
