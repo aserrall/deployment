@@ -11,6 +11,8 @@ from django.contrib.auth import authenticate, login
 import datetime
 from django.contrib.auth.decorators import login_required
 
+from django.db import connection
+
 
 def index(request):
     context = {}
@@ -41,3 +43,16 @@ def register(request):
 def forum(request):
     context = {}
     return render(request, 'likeme/foro.html', context)
+
+
+def mirarPerfil(request, user):
+    
+    u = User.objects.get(username = user)
+
+    c = Client.objects.get(user=u)
+    
+    context = {
+            'client' : c}
+
+    return render(request, 'likeme/perfil.html', context)
+

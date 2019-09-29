@@ -1,0 +1,14 @@
+<ul>
+    <li>{{client.user}}</li>
+    {% if client.sexo == 1 %}
+        <li>Home</li>
+    {% else %}
+        <li>Dona</li>
+    {% endif %}
+
+    <li>{{client.dataAniversari}}</li>
+    <li>{{client.numTelefon}}</li>
+
+    <a href = "{% url 'forum' %}"> Forum</a> 
+<ul>
+

@@ -9,5 +9,7 @@ urlpatterns = [
     path(r'accounts/logout/', logout, {'next_page': '/'}, name='logout'),
 
     path(r'foro/', views.forum, name='forum'),
+    path(r'perfil/', views.mirarPerfil, name='mirarPerfil'),
+    path(r'perfil/<user>/', views.mirarPerfil, name='mirarPerfil'),
 
     ]
