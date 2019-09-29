@@ -11,8 +11,6 @@ from django.contrib.auth import authenticate, login
 import datetime
 from django.contrib.auth.decorators import login_required
 
-from django.db import connection
-
 
 def index(request):
     context = {}
