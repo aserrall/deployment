@@ -40,24 +40,35 @@ def register(request):
 
 @login_required()
 def forum(request):
+    if request.method == "POST":
+        if "buscarUsuari" in request.POST.keys():
+            return redirect('search_users')
 
-    if request.method =="POST":
-        return redirect('mirarPerfil', request.POST['buscarUsuari'])
 
     context = {}
     return render(request, 'likeme/foro.html', context)
 
 
+@login_required()
+def search_users(request):
+    if request.method == "POST":
+        if "buscarUsuari" in request.POST.keys():
+            to_search = request.POST['buscarUsuari']
+            context = {"to_search": to_search}
+            return render(request, 'search/SearchUser.html', context)
+
+    context = {}
+    return render(request, 'search/SearchUser.html', context)
+
+
 def mirarPerfil(request, user):
-    
     try:
-        u = User.objects.get(username = user)
+        u = User.objects.get(username=user)
         c = Client.objects.get(user=u)
 
         context = {
-                'client' : c}
+            'client': c}
     except:
         context = {}
 
     return render(request, 'likeme/perfil.html', context)
-

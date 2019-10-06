@@ -1,0 +1,16 @@
+{% extends "likeme/BaseLayout.html" %}
+{% load static %}
+
+<link rel="stylesheet"
+href="{% static 'css/style.css' %}" />
+
+{% block content %}
+
+    <form action ="" method="post">
+        {% csrf_token %}
+        <input id="buscarUsuari" type="text" name="buscarUsuari" value="Buscar">
+        <input type="submit" value="Buscar">
+    </form>
+    <h1>{{ to_search }}</h1>
+
+{% endblock %}
