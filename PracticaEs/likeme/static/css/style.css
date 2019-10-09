@@ -20,7 +20,54 @@ nav {
 	text-transform: uppercase;
 }
 
+/*LOGED*/
+#logoaut{
+	transform: translateX(260%);
+}
+#buscarUsuarinav{
+	height: 45px;
+	transform: translateX(-62%);
+}
+#buscarnav{
+	transform: translateY(-15%);
+}
+#colbarrabuscar{
+	width: 450px;
+}
+#barrabuscarnav{
+	border-radius: 0 !important;
+	border: none !important;
+	height: 30px;
+	font-size: 14px;
+}
+#botobusca{
+	transform: translateX(-30%);
+}
 
+/*NO LOGED*/
+#logonoaut{
+	transform: translateX(40%);
+}
+#navlogin{
+	height: 45px;
+	transform: translateX(11%);
+}
+
+#navlogin p{
+	font-size: 14px;
+	transform: translateY(-135%);
+}
+#navlogin input{
+	border-radius: 0 !important;
+	border: none !important;
+	transform: translateY(-135%);
+	height: 30px;
+	font-size: 14px;
+}
+#btn{
+	transform: translateY(-13%) !important;
+	border-radius: 100 !important;
+}
 .nav-link {
 color: white !important;
 }
