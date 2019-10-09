@@ -22,6 +22,9 @@ def index(request):
 
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('forum')  # TODO: Better make the user logout
+
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -46,23 +49,35 @@ def forum(request):
     context = {}
     if request.method == "POST":
         if "buscarUsuari" in request.POST.keys():
-            to_search = request.POST['buscarUsuari']
-            context = {"to_search": to_search}
-            return render('search_users', context)
+            return search_users(request)
 
     return render(request, 'likeme/foro.html', context)
 
 
 @login_required()
 def search_users(request):
-    if request.method == "POST":
-        if "buscarUsuari" in request.POST.keys():
-            to_search = request.POST['buscarUsuari']
-            context = {"to_search": to_search}
-            return render(request, 'search/SearchUser.html', context)
+    try:
+        if request.method == "POST":
+            if "buscarUsuari" in request.POST.keys():
+                to_search = request.POST['buscarUsuari']
+                context = {'to_search': to_search}
 
-    context = {}
-    return render(request, 'search/SearchUser.html', context)
+                if to_search is not None:
+                    form = FriendSearchForm(request.POST)
+                    if form.is_valid():
+                        friendship_request = form.save(commit=False)
+                        friendship_request.user_sender = request.user
+                        friendship_request.user_receiver = User.objects.get(username=to_search)
+                        friendship_request.save()
+                        request.session["friendrequest"] = "OK"
+                    else:
+                        request.session["friendrequest"] = form.errors
+
+                return render(request, 'search/SearchUser.html', context)
+
+    except User.DoesNotExist:
+        request.session["friendrequest"] = "ERROR!"
+        return HttpResponse("User does not exists!")
 
 
 def mirarPerfil(request, user):

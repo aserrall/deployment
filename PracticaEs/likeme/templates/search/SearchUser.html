@@ -5,6 +5,10 @@
 href="{% static 'css/style.css' %}" />
 
 {% block content %}
-    <h1>{{ to_search }}</h1>
+    {% if to_search %}
+         <a href="{% url 'mirarPerfil' to_search %}" name="mirarPerfil">{{to_search}}</a>
+    {% else %}
+        <h1>{{ to_search }} does not exists!</h1>
+    {% endif %}
 
 {% endblock %}
