@@ -15,7 +15,10 @@ from django.shortcuts import redirect
 
 def index(request):
     context = {}
-    return render(request, 'likeme/HomeLanding.html', context)
+    if request.user.is_authenticated:
+        return redirect('forum')
+    else:
+        return render(request, 'likeme/HomeLanding.html', context)
 
 
 def register(request):
@@ -40,12 +43,13 @@ def register(request):
 
 @login_required()
 def forum(request):
+    context = {}
     if request.method == "POST":
         if "buscarUsuari" in request.POST.keys():
-            return redirect('search_users')
+            to_search = request.POST['buscarUsuari']
+            context = {"to_search": to_search}
+            return render('search_users', context)
 
-
-    context = {}
     return render(request, 'likeme/foro.html', context)
 
 
