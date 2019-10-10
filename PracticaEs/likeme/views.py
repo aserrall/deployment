@@ -15,10 +15,16 @@ from django.shortcuts import redirect
 
 def index(request):
     context = {}
-    return render(request, 'likeme/HomeLanding.html', context)
+    if request.user.is_authenticated:
+        return redirect('forum')
+    else:
+        return render(request, 'likeme/HomeLanding.html', context)
 
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('forum')  # TODO: Better make the user logout
+
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -40,24 +46,45 @@ def register(request):
 
 @login_required()
 def forum(request):
-
-    if request.method =="POST":
-        return redirect('mirarPerfil', request.POST['buscarUsuari'])
-
     context = {}
     return render(request, 'likeme/foro.html', context)
 
 
+@login_required()
+def search_users(request):
+    if request.method == "POST":
+        if "buscarUsuari" in request.POST.keys():
+            to_search = request.POST['buscarUsuari']
+            try:
+                user_search = User.objects.get(username=to_search)
+                request.session["to_search_friend"] = to_search
+            except (KeyError, User.DoesNotExist, AttributeError):
+                request.session["to_search_friend"] = "ERROR!"
+                context = {'notfound': to_search,
+                           'added': False}
+                return render(request, 'search/SearchUser.html', context)
+
+            context = {'to_search': user_search}
+            return render(request, 'search/SearchUser.html', context)
+
+        elif "afegirUsuari" in request.POST.keys():
+            to_add = request.POST['afegirUsuari']
+            user_to_add = User.objects.get(username=to_add)
+            context = {'to_search': user_to_add,
+                       'added': True}
+            return render(request, 'search/SearchUser.html', context)
+
+    return render(request, 'search/SearchUser.html', {})
+
+
 def mirarPerfil(request, user):
-    
     try:
-        u = User.objects.get(username = user)
+        u = User.objects.get(username=user)
         c = Client.objects.get(user=u)
 
         context = {
-                'client' : c}
+            'client': c}
     except:
         context = {}
 
     return render(request, 'likeme/perfil.html', context)
-
