@@ -47,9 +47,34 @@ def register(request):
 @login_required()
 def forum(request):
     context = {}
-    if request.method == "POST":
-        if "buscarUsuari" in request.POST.keys():
-            return search_users(request)
+    try:
+        if request.method == "POST":
+            if "buscarUsuari" in request.POST.keys():
+                to_search = request.POST['buscarUsuari']
+                context = {'to_search': to_search}
+
+                if to_search is not None:
+                    receiver = User.objects.get(username=to_search)
+                    form = FriendSearchForm(request.POST)
+                    if form.is_valid():
+                        try:
+                            friendship_request = form.save(commit=False)
+                            friendship_request.user_sender = request.user
+                            friendship_request.user_receiver = receiver
+                            friendship_request.save()
+                            request.session["friendrequest"] = "OK"
+                        except User.DoesNotExist:
+                            request.session["friendrequest"] = "ERROR!"
+                            return HttpResponse("User " + to_search + " was not found!")
+
+                    else:
+                        request.session["friendrequest"] = form.errors
+
+                return HttpResponseRedirect('/search/')
+
+    except User.DoesNotExist:
+        request.session["friendrequest"] = "ERROR!"
+        return HttpResponse("User Can not be null")
 
     return render(request, 'likeme/foro.html', context)
 
@@ -63,13 +88,19 @@ def search_users(request):
                 context = {'to_search': to_search}
 
                 if to_search is not None:
+                    receiver = User.objects.get(username=to_search)
                     form = FriendSearchForm(request.POST)
                     if form.is_valid():
-                        friendship_request = form.save(commit=False)
-                        friendship_request.user_sender = request.user
-                        friendship_request.user_receiver = User.objects.get(username=to_search)
-                        friendship_request.save()
-                        request.session["friendrequest"] = "OK"
+                        try:
+                            friendship_request = form.save(commit=False)
+                            friendship_request.user_sender = request.user
+                            friendship_request.user_receiver = receiver
+                            friendship_request.save()
+                            request.session["friendrequest"] = "OK"
+                        except User.DoesNotExist:
+                            request.session["friendrequest"] = "ERROR!"
+                            return render(request, 'search/SearchUser.html', {})
+
                     else:
                         request.session["friendrequest"] = form.errors
 
@@ -77,7 +108,8 @@ def search_users(request):
 
     except User.DoesNotExist:
         request.session["friendrequest"] = "ERROR!"
-        return HttpResponse("User does not exists!")
+        return render(request, 'search/SearchUser.html', {})
+    return render(request, 'search/SearchUser.html', {})
 
 
 def mirarPerfil(request, user):
