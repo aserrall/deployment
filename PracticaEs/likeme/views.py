@@ -47,13 +47,6 @@ def register(request):
 @login_required()
 def forum(request):
     context = {}
-
-    if request.method == "POST":
-        if "buscarUsuari" in request.POST.keys():
-            to_search = request.POST['buscarUsuari']
-            request.session["to_search_friend"] = to_search
-            return HttpResponseRedirect('/search/')
-
     return render(request, 'likeme/foro.html', context)
 
 
@@ -67,22 +60,21 @@ def search_users(request):
                 request.session["to_search_friend"] = to_search
             except (KeyError, User.DoesNotExist, AttributeError):
                 request.session["to_search_friend"] = "ERROR!"
-                context = {"notfound": to_search}
+                context = {'notfound': to_search,
+                           'added': False}
                 return render(request, 'search/SearchUser.html', context)
 
             context = {'to_search': user_search}
             return render(request, 'search/SearchUser.html', context)
 
-    elif request.method == "GET":
-        to_search = request.session.get("to_search_friend")
-        try:
-            user_search = User.objects.get(username=to_search)
-            context = {"to_search": user_search}
+        elif "afegirUsuari" in request.POST.keys():
+            to_add = request.POST['afegirUsuari']
+            user_to_add = User.objects.get(username=to_add)
+            context = {'to_search': user_to_add,
+                       'added': True}
             return render(request, 'search/SearchUser.html', context)
-        except User.DoesNotExist:
-            request.session["to_search_friend"] = "ERROR!"
-            context = {"notfound": to_search}
-            return render(request, 'search/SearchUser.html', context)
+
+    return render(request, 'search/SearchUser.html', {})
 
 
 def mirarPerfil(request, user):

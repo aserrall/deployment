@@ -8,8 +8,17 @@ href="{% static 'css/style.css' %}" />
     {% if to_search %}
     <h1> USERS: </h1>
         <li>
-            <h2><a href="{% url 'mirarPerfil' to_search.username %}" name="mirarPerfil">{{to_search.username}}</a></h2>
-
+            <form action ="" method="POST">
+                {% csrf_token %}
+                <h2>
+                    <a href="{% url 'mirarPerfil' to_search.username %}" name="mirarPerfil">{{to_search.username}}</a>
+                    {% if not added %}
+                        <button class="btn btn-primary" type="submit" name="afegirUsuari" value={{to_search.username}}> Afegir</button>
+                    {% else %}
+                        Send!
+                    {% endif %}
+                </h2>
+            </form>
         </li>
     {% else %}
         <h1>The user {{ notfound }} does not exists!</h1>

@@ -34,7 +34,7 @@
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link">
-                            <form action ="" method="post">
+                            <form action ="{% url 'index' %}search/" method="POST">
                                 {% csrf_token %}
                                 <input id="buscarUsuari" type="text" name="buscarUsuari" placeholder="Search user">
                                 <input type="submit" value="Buscar">
