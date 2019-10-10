@@ -11,5 +11,6 @@ urlpatterns = [
     path(r'foro/', views.forum, name='forum'),
     path(r'perfil/', views.mirarPerfil, name='mirarPerfil'),
     path(r'perfil/<user>/', views.mirarPerfil, name='mirarPerfil'),
+    path(r'search/', views.search_users, name='search_users'),
 
     ]

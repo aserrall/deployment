@@ -5,12 +5,6 @@
 href="{% static 'css/style.css' %}" />
 
 {% block content %}
-    <form action ="" method="post">
-	{% csrf_token %}
-	<input id="buscarUsuari" type="text" name="buscarUsuari" value="Buscar">
-	<input type="submit" value="Buscar">
-    </form>
-
     <h1>You are logged in as: {{ user }}</h1>
 
 {% endblock %}
