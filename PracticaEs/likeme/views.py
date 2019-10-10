@@ -10,6 +10,7 @@ from .forms import *
 from django.contrib.auth import authenticate, login
 import datetime
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 
 
 def index(request):
@@ -39,5 +40,24 @@ def register(request):
 
 @login_required()
 def forum(request):
+
+    if request.method =="POST":
+        return redirect('mirarPerfil', request.POST['buscarUsuari'])
+
     context = {}
     return render(request, 'likeme/foro.html', context)
+
+
+def mirarPerfil(request, user):
+    
+    try:
+        u = User.objects.get(username = user)
+        c = Client.objects.get(user=u)
+
+        context = {
+                'client' : c}
+    except:
+        context = {}
+
+    return render(request, 'likeme/perfil.html', context)
+

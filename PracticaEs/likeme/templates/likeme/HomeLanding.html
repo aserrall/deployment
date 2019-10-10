@@ -3,4 +3,8 @@
 
 <link rel="stylesheet"
 href="{% static 'css/style.css' %}" />
-<h1>dasd</h1>
+{% block content %}
+<section id="landing">
+    <meta http-equiv="Refresh" content="0; url={% url 'register' %}" />
+</section>
+{% endblock %}
