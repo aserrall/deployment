@@ -1,14 +1,21 @@
-<ul>
-    <li>{{client.user}}</li>
-    {% if client.sexo == 1 %}
-        <li>Home</li>
-    {% else %}
-        <li>Dona</li>
-    {% endif %}
+{% extends "likeme/BaseLayout.html" %}
+{% load static %}
 
-    <li>{{client.dataAniversari}}</li>
-    <li>{{client.numTelefon}}</li>
+<link rel="stylesheet"
+href="{% static 'css/style.css' %}" />
 
-    <a href = "{% url 'forum' %}"> Forum</a> 
-<ul>
+{% block content %}
+    <ul>
+        <li>{{client.user}}</li>
+        {% if client.sexo == 1 %}
+            <li>Home</li>
+        {% else %}
+            <li>Dona</li>
+        {% endif %}
 
+        <li>{{client.dataAniversari}}</li>
+        <li>{{client.numTelefon}}</li>
+
+        <a href = "{% url 'forum' %}"> Forum</a>
+    </ul>
+{% endblock %}
