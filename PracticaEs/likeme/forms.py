@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, get_user_model
 from django.db import models
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from .models import User
+from .models import User, FriendShip
 
 
 class RegisterForm(forms.ModelForm):
@@ -56,3 +56,9 @@ class UserEditorForm(forms.ModelForm):
             'photo',
             'phone_number'
         ]
+
+
+class FriendSearchForm(forms.ModelForm):
+    class Meta:
+        model = FriendShip
+        fields = ["user_sender", "user_receiver"]

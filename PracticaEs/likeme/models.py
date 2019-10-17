@@ -109,3 +109,13 @@ class LikeMeUser(AbstractBaseUser):
 
 
 User = LikeMeUser
+
+
+class FriendShip(models.Model):
+    id = models.AutoField(primary_key=True)
+    user_sender = models.ForeignKey(User, related_name="friendship_sender_set", on_delete=models.CASCADE)
+    user_receiver = models.ForeignKey(User, related_name="friendship_receiver_set", on_delete=models.CASCADE)
+    accepted = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "FriendShip from " + str(self.user_sender) + " to " + str(self.user_receiver)
