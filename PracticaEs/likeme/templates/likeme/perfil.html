@@ -7,14 +7,14 @@ href="{% static 'css/style.css' %}" />
 {% block content %}
     <ul>
         <li>{{client.user}}</li>
-        {% if client.sexo == 1 %}
+        {% if client.sex == 1 %}
             <li>Home</li>
         {% else %}
             <li>Dona</li>
         {% endif %}
 
-        <li>{{client.dataAniversari}}</li>
-        <li>{{client.numTelefon}}</li>
+        <li>{{client.birth_date}}</li>
+        <li>{{client.phone_number}}</li>
 
         <a href = "{% url 'forum' %}"> Forum</a>
     </ul>

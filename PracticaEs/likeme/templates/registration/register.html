@@ -13,6 +13,9 @@ href="{% static 'css/style.css' %}" />
             	<img src="../static/img/logocatala.png" class="img-responsive">
         	</div>
 		</div>
+        {% if form.errors %}
+            <center><p class="error">Error registering user!</p></center>
+        {% endif %}
 
 		<div class="col-md-6">
 			<h1>Registrarse</h1>
@@ -23,9 +26,6 @@ href="{% static 'css/style.css' %}" />
 			{% for field in form %}
 				{{ field.label_tag }} {{ field }}<br>
 			{% endfor %}
-
-			<label for="n_tel">Numero de telefon: </label>
-			<input id="n_tel" type="text" name="n_tel" value="{{ c_tel }}">
 			<input type="submit" value="Registrarse">
 
 			</form>

@@ -26,21 +26,19 @@ def register(request):
         return redirect('forum')  # TODO: Better make the user logout
 
     if request.method == 'POST':
-        form = SignupForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
-            new_user = form.save()
-            dAniversari = datetime.date(
-                int(request.POST['anyNeixement_year']),
-                int(request.POST['anyNeixement_month']),
-                int(request.POST['anyNeixement_day']))
-            sex = request.POST['choice']
-            nTel = request.POST['n_tel']
+            new_user = form.save(commit=False)
 
+            password = form.cleaned_data.get('password')
+            new_user.set_password(password)
+            new_user.save()
             login(request, new_user)
-            Client.objects.create(user=new_user, sexo=sex, dataAniversari=dAniversari, numTelefon=nTel)
             return HttpResponseRedirect(reverse("forum"))
+        else:
+            print(form.errors)
     else:
-        form = SignupForm()
+        form = RegisterForm()
     return render(request, "registration/register.html", {'form': form, })
 
 
@@ -56,7 +54,7 @@ def search_users(request):
         if "buscarUsuari" in request.POST.keys():
             to_search = request.POST['buscarUsuari']
             try:
-                user_search = User.objects.get(username=to_search)
+                user_search = User.objects.get(first_name=to_search)
                 request.session["to_search_friend"] = to_search
             except (KeyError, User.DoesNotExist, AttributeError):
                 request.session["to_search_friend"] = "ERROR!"
@@ -69,7 +67,8 @@ def search_users(request):
 
         elif "afegirUsuari" in request.POST.keys():
             to_add = request.POST['afegirUsuari']
-            user_to_add = User.objects.get(username=to_add)
+            user_to_add = User.objects.get(first_name=to_add)
+
             context = {'to_search': user_to_add,
                        'added': True}
             return render(request, 'search/SearchUser.html', context)
@@ -79,11 +78,12 @@ def search_users(request):
 
 def mirarPerfil(request, user):
     try:
-        u = User.objects.get(username=user)
-        c = Client.objects.get(user=u)
+        print(user)
+        u = User.objects.get(first_name=user)
+
 
         context = {
-            'client': c}
+            'client': u}
     except:
         context = {}
 

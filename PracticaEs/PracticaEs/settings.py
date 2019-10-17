@@ -100,6 +100,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'likeme.LikeMeUser' # changes the built-in user model to ours!
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

@@ -11,9 +11,9 @@ href="{% static 'css/style.css' %}" />
             <form action ="" method="POST">
                 {% csrf_token %}
                 <h2>
-                    <a href="{% url 'mirarPerfil' to_search.username %}" name="mirarPerfil">{{to_search.username}}</a>
+                    <a href="{% url 'mirarPerfil' to_search.first_name %}" name="mirarPerfil">{{to_search.first_name}}</a>
                     {% if not added %}
-                        <button class="btn btn-primary" type="submit" name="afegirUsuari" value={{to_search.username}}> Afegir</button>
+                        <button class="btn btn-primary" type="submit" name="afegirUsuari" value={{to_search.first_name}}> Afegir</button>
                     {% else %}
                         Send!
                     {% endif %}
