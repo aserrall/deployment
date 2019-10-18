@@ -5,17 +5,27 @@
 href="{% static 'css/style.css' %}" />
 
 {% block content %}
-    <ul>
-        <li>{{client.user}}</li>
-        {% if client.sexo == 1 %}
-            <li>Home</li>
-        {% else %}
-            <li>Dona</li>
-        {% endif %}
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<div>
+    <div class="profile">
+        <img align="left" class="image-lg" src="https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/images/649694main_pia15417-43_full.jpg" alt="Profile image example"/>
+        <img align="left" class="image-profile thumbnail" src="https://bootdey.com/img/Content/user-453533-fdadfd.png" alt="Profile image example"/>
+        <div class="profile-text">
+            <h1>{{client.user}}</h1>
+            {% if client.sexo == 1 %}
+                <p>Home - {{client.numTelefon}}</p>
+            {% else %}
+                <p>Dona, {{client.numTelefon}}</p>
+            {% endif %}
+            <p>{{client.dataAniversari}}</p>
+        </div>
 
-        <li>{{client.dataAniversari}}</li>
-        <li>{{client.numTelefon}}</li>
+        POSTS
 
-        <a href = "{% url 'forum' %}"> Forum</a>
-    </ul>
+
+    </div>
+</div>
+<div>
+
+</div>
 {% endblock %}

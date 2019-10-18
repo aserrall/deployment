@@ -57,6 +57,7 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNav2">
             <ul class="navbar-nav ml-auto">
+              {% if not "/accounts/login" in request.get_full_path %}
           <!--AMB LINK-->
           <!--<li class="nav-item">
             <a class="nav-link" href="{% url 'login' %}" name="login">LOG IN</a>
@@ -78,6 +79,7 @@
               </div>
             </div>
           </form>
+              {% endif %}
         {% endif %}
       </ul>
     </div>

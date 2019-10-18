@@ -72,11 +72,37 @@ nav {
 color: white !important;
 }
 
-
-
 div {
   padding-top: 10px;
   padding-right: 20px;
   padding-bottom: 10px;
   padding-left: 50px;
+}
+
+.profile img.image-lg{
+    z-index: 0;
+    width: 100%;
+	object-fit: cover;
+  	max-height: 500px;
+}
+
+.image-profile {
+    margin: -90px 10px 0px 50px;
+    z-index: 9;
+    width: 12%;
+}
+
+@media (max-width:768px) {
+
+.profile-text>h1{
+    font-weight: 700;
+    font-size:16px;
+}
+
+.image-profile
+{
+    margin: -45px 10px 0px 25px;
+    z-index: 9;
+    width: 12%;
+}
 }
