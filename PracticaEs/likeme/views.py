@@ -1,16 +1,14 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from .models import *
-from django.contrib import auth
-from django import forms
-from django.contrib.auth.models import User
-from .forms import *
-from django.contrib.auth import authenticate, login
-import datetime
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
+from django.shortcuts import render
+from django.urls import reverse
+from django.db.models import Q
+
+from .forms import *
+from .models import *
 
 
 def index(request):
@@ -26,21 +24,19 @@ def register(request):
         return redirect('forum')  # TODO: Better make the user logout
 
     if request.method == 'POST':
-        form = SignupForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
-            new_user = form.save()
-            dAniversari = datetime.date(
-                int(request.POST['anyNeixement_year']),
-                int(request.POST['anyNeixement_month']),
-                int(request.POST['anyNeixement_day']))
-            sex = request.POST['choice']
-            nTel = request.POST['n_tel']
+            new_user = form.save(commit=False)
 
+            password = form.cleaned_data.get('password')
+            new_user.set_password(password)
+            new_user.save()
             login(request, new_user)
-            Client.objects.create(user=new_user, sexo=sex, dataAniversari=dAniversari, numTelefon=nTel)
             return HttpResponseRedirect(reverse("forum"))
+        else:
+            print(form.errors)
     else:
-        form = SignupForm()
+        form = RegisterForm()
     return render(request, "registration/register.html", {'form': form, })
 
 
@@ -56,20 +52,40 @@ def search_users(request):
         if "buscarUsuari" in request.POST.keys():
             to_search = request.POST['buscarUsuari']
             try:
-                user_search = User.objects.get(username=to_search)
+                users_found = User.objects.filter(first_name__icontains=to_search)
                 request.session["to_search_friend"] = to_search
+
             except (KeyError, User.DoesNotExist, AttributeError):
                 request.session["to_search_friend"] = "ERROR!"
                 context = {'notfound': to_search,
                            'added': False}
                 return render(request, 'search/SearchUser.html', context)
 
-            context = {'to_search': user_search}
+            pending_users = []
+            print(users_found)
+            for user in users_found:
+                print(user)
+                if user == request.user:
+                    continue
+                try:
+                    f = FriendShip.objects.get(Q(user_sender=request.user, user_receiver=user, accepted=False) # Im okey fronted will deal with it
+                                               | Q(user_sender=user, user_receiver=request.user, accepted=False))
+                    if f is not None:
+                        pending_users.append(f)
+
+                except (KeyError, FriendShip.DoesNotExist, AttributeError):
+                    print("error")
+
+            print(pending_users)
+
+
+            context = {'to_search': users_found}
             return render(request, 'search/SearchUser.html', context)
 
         elif "afegirUsuari" in request.POST.keys():
             to_add = request.POST['afegirUsuari']
-            user_to_add = User.objects.get(username=to_add)
+            user_to_add = User.objects.get(first_name=to_add)
+
             context = {'to_search': user_to_add,
                        'added': True}
             return render(request, 'search/SearchUser.html', context)
@@ -77,13 +93,13 @@ def search_users(request):
     return render(request, 'search/SearchUser.html', {})
 
 
-def mirarPerfil(request, user):
+def mirarPerfil(request, email):
     try:
-        u = User.objects.get(username=user)
-        c = Client.objects.get(user=u)
+        u = User.objects.get(email=email)
+
 
         context = {
-            'client': c}
+            'client': u}
     except:
         context = {}
 

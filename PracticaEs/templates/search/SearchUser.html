@@ -1,0 +1,29 @@
+{% extends "likeme/BaseLayout.html" %}
+{% load static %}
+
+<link rel="stylesheet"
+href="{% static 'css/style.css' %}" />
+
+{% block content %}
+    {% if to_search %}
+         <h1> USERS: </h1>
+        {% for user in to_search %}
+            <li>
+                <form action ="" method="POST">
+                    {% csrf_token %}
+                    <h2>
+                        <a href="{% url 'mirarPerfil' user.email %}" name="mirarPerfil">{{user.first_name}} {{user.last_name}}</a>
+                        {% if not added %}
+                            <button class="btn btn-primary" type="submit" name="afegirUsuari" value={{user.first_name}}> Afegir</button>
+                        {% else %}
+                            Send!
+                        {% endif %}
+                    </h2>
+                </form>
+            </li>
+        {% endfor %}
+    {% else %}
+        <h1>The user {{ notfound }} does not exists!</h1>
+    {% endif %}
+
+{% endblock %}
