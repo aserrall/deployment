@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
 {% extends "likeme/BaseLayout.html" %}
 {% load static %}
 
@@ -5,25 +13,83 @@
 href="{% static 'css/style.css' %}" />
 
 {% block content %}
-    {% if to_search %}
-         <h1> USERS: </h1>
-        {% for user in to_search %}
+
+    <h1> Users found: </h1>
+    {% if l_possible_users %}
+        {% for user in l_possible_users %}
             <li>
                 <form action ="" method="POST">
                     {% csrf_token %}
                     <h2>
                         <a href="{% url 'mirarPerfil' user.email %}" name="mirarPerfil">{{user.first_name}} {{user.last_name}}</a>
-                        {% if not added %}
-                            <button class="btn btn-primary" type="submit" name="afegirUsuari" value={{user.email}}> Afegir</button>
-                        {% else %}
-                            Send!
-                        {% endif %}
+                        <button class="btn btn-primary" type="submit" name="send_freq" value={{user.email}}> Send Friend Request!</button>
                     </h2>
                 </form>
             </li>
         {% endfor %}
-    {% else %}
-        <h1>The user {{ notfound }} does not exists!</h1>
     {% endif %}
 
+    <h1>current friends</h1>
+    {% if l_freq_current_friends %}
+        {% for f_req in l_freq_current_friends %}
+            {% if f_req.user_receiver.email  != user.email %}
+                <li>
+                    <form action ="" method="POST">
+                        {% csrf_token %}
+                        <h2>
+                            <a href="{% url 'mirarPerfil' f_req.user_receiver.email %}" name="mirarPerfil">{{f_req.user_receiver.first_name}} {{f_req.user_receiver.last_name}}</a>
+                            <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Remove</button>
+                        </h2>
+                    </form>
+                </li>
+
+            {% else %}
+                <li>
+                    <form action ="" method="POST">
+                        {% csrf_token %}
+                        <h2>
+                            <a href="{% url 'mirarPerfil' f_req.user_sender.email %}" name="mirarPerfil">{{f_req.user_sender.first_name}} {{f_req.user_sender.last_name}}</a>
+                            <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Remove</button>
+                        </h2>
+                    </form>
+                </li>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <h1>send</h1>
+    {% if l_freq_send %}
+        {% for f_req in l_freq_send %}
+            <li>
+                <form action ="" method="POST">
+                    {% csrf_token %}
+                    <h2>
+                        <a href="{% url 'mirarPerfil' f_req.user_receiver.email %}" name="mirarPerfil">{{f_req.user_receiver.first_name}} {{f_req.user_receiver.last_name}}</a>
+                        <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Cancel</button>
+                    </h2>
+                </form>
+            </li>
+        {% endfor %}
+    {% endif %}
+
+    <h1>to accept</h1>
+    {% if l_freq_to_accept %}
+        {% for f_req in l_freq_to_accept %}
+            <li>
+                <form action ="" method="POST">
+                    {% csrf_token %}
+                    <h2>
+                        <a href="{% url 'mirarPerfil' f_req.user_sender.email %}" name="mirarPerfil">{{f_req.user_sender.first_name}} {{f_req.user_sender.last_name}}</a>
+                                               <button class="btn btn-primary" type="submit" name="accept_freq" value={{f_req.id}}> Accept</button>
+                        <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Cancel</button>
+                    </h2>
+                </form>
+            </li>
+        {% endfor %}
+    {% endif %}
+
+
 {% endblock %}
+
+</body>
+</html>

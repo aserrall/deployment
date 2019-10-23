@@ -24,6 +24,7 @@ href="{% static 'css/style.css' %}" />
                         {% csrf_token %}
                         <h2>
                             <a href="{% url 'mirarPerfil' f_req.user_receiver.email %}" name="mirarPerfil">{{f_req.user_receiver.first_name}} {{f_req.user_receiver.last_name}}</a>
+                            <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Remove</button>
                         </h2>
                     </form>
                 </li>
@@ -34,6 +35,7 @@ href="{% static 'css/style.css' %}" />
                         {% csrf_token %}
                         <h2>
                             <a href="{% url 'mirarPerfil' f_req.user_sender.email %}" name="mirarPerfil">{{f_req.user_sender.first_name}} {{f_req.user_sender.last_name}}</a>
+                            <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Remove</button>
                         </h2>
                     </form>
                 </li>
@@ -49,6 +51,7 @@ href="{% static 'css/style.css' %}" />
                     {% csrf_token %}
                     <h2>
                         <a href="{% url 'mirarPerfil' f_req.user_receiver.email %}" name="mirarPerfil">{{f_req.user_receiver.first_name}} {{f_req.user_receiver.last_name}}</a>
+                        <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Cancel</button>
                     </h2>
                 </form>
             </li>
@@ -63,6 +66,9 @@ href="{% static 'css/style.css' %}" />
                     {% csrf_token %}
                     <h2>
                         <a href="{% url 'mirarPerfil' f_req.user_sender.email %}" name="mirarPerfil">{{f_req.user_sender.first_name}} {{f_req.user_sender.last_name}}</a>
+                        <button class="btn btn-primary" type="submit" name="accept_freq" value={{f_req.id}}> Accept</button>
+                        <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Cancel</button>
+
                     </h2>
                 </form>
             </li>

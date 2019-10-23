@@ -48,7 +48,15 @@ def forum(request):
 
 @login_required()
 def friends(request):
-    # TODO: Here you are supposed to be able to handle friend requests and current friendships
+    if request.method == "POST":
+        if "cancel_freq" in request.POST.keys():
+            freq_id = request.POST['cancel_freq']
+            FriendShip.objects.get(id=freq_id).delete()
+        elif "accept_freq" in request.POST.keys():
+            freq_id = request.POST['accept_freq']
+            FriendShip.objects.filter(id=freq_id).update(accepted=True)
+
+        return HttpResponseRedirect(reverse("friends"))
 
     if request.method == 'GET':
         freq_current_friends = FriendShip.objects.filter(Q(user_sender=request.user, accepted=True) |
@@ -68,40 +76,12 @@ def friends(request):
 @login_required()
 def search_users(request):
     if request.method == "POST":
-        if "buscarUsuari" in request.POST.keys():
-            to_search = request.POST['buscarUsuari']
-            try:
-                users_found = User.objects.filter(first_name__icontains=to_search)  # TODO: Exclude yourself?
-                request.session["to_search_friend"] = to_search
-
-            except (KeyError, User.DoesNotExist, AttributeError):
-                request.session["to_search_friend"] = "ERROR!"
-                context = {'notfound': to_search,
-                           'added': False}
-                return render(request, 'search/SearchUser.html', context)
-
-            pending_users = []
-            print(users_found)
-            for user in users_found:
-                if user == request.user:
-                    continue
-                try:
-                    f = FriendShip.objects.get(Q(user_sender=request.user, user_receiver=user,
-                                                 accepted=False)  # Im okey fronted will deal with it
-                                               | Q(user_sender=user, user_receiver=request.user, accepted=False))
-                    if f is not None:
-                        pending_users.append(f)
-
-                except (KeyError, FriendShip.DoesNotExist, AttributeError):
-                    print("error")
-
-            print(pending_users)
-
-            context = {'to_search': users_found}
-            return render(request, 'search/SearchUser.html', context)
-
-        elif "afegirUsuari" in request.POST.keys():
-            user_to_add_email = request.POST['afegirUsuari']
+        if "users_to_search" in request.POST.keys():
+            to_search = request.POST['users_to_search']
+            request.session["to_search_friend"] = to_search
+            print(to_search)
+        elif "send_freq" in request.POST.keys():
+            user_to_add_email = request.POST['send_freq']
             if user_to_add_email:
                 try:
                     user_to_add = User.objects.get(email=user_to_add_email)
@@ -114,21 +94,70 @@ def search_users(request):
                 except (KeyError, User.DoesNotExist, AttributeError):
                     request.session['addResult'] = 'ERROR!'
 
+        elif "cancel_freq" in request.POST.keys():
+            freq_id = request.POST['cancel_freq']
+            FriendShip.objects.get(id=freq_id).delete()
+
+        elif "accept_freq" in request.POST.keys():
+            freq_id = request.POST['accept_freq']
+            FriendShip.objects.filter(id=freq_id).update(accepted=True)
+
+        return HttpResponseRedirect(reverse("search_users"))
+
+    if request.method == "GET":
+        to_search = request.session["to_search_friend"]
+        #print(to_search)
+        try:
+            users_found = User.objects.filter(first_name__icontains=to_search).exclude(email=request.user.email)
+            #print(users_found)
+            l_freq_current_friends = []
+            l_freq_send = []
+            l_freq_to_accept = []
+            l_possible_users = []
+
+            for u in users_found:
+                #print(u)
+                freq_current_friends = FriendShip.objects.filter(
+                    Q(user_sender=u, user_receiver=request.user, accepted=True) |
+                    Q(user_sender=request.user, user_receiver=u, accepted=True))
+
+                freq_send = FriendShip.objects.filter(user_sender=request.user, user_receiver=u,
+                                                      accepted=False)
+
+                freq_to_accept = FriendShip.objects.filter(user_sender=u, user_receiver=request.user,
+                                                           accepted=False)
+                #print(freq_current_friends)
+                #print(freq_send)
+                #print(freq_to_accept)
+
+                if not freq_current_friends and not freq_send and not freq_to_accept:
+                    l_possible_users.append(u)
+                else:
+                    if freq_current_friends:
+                        l_freq_current_friends += freq_current_friends
+                    if freq_send:
+                        l_freq_send += freq_send
+                    if freq_to_accept:
+                        l_freq_to_accept += freq_to_accept
+
+                #print(l_possible_users)
+                #print(l_freq_to_accept)
+                #print(l_freq_current_friends)
+                #print(l_freq_send)
+
             context = {
-                'to_search': [user_to_add],
-                'added': True
+                "l_freq_current_friends": l_freq_current_friends,
+                "l_freq_send": l_freq_send,
+                "l_freq_to_accept": l_freq_to_accept,
+                "l_possible_users": l_possible_users
             }
 
             return render(request, 'search/SearchUser.html', context)
 
-        elif "refuseUsuari" in request.POST.keys():
-            pass
-
-        return HttpResponseRedirect(reverse("search_users"))
-
-    elif request.method == "GET":
-        pass
-    return render(request, 'search/SearchUser.html', {})
+        except (KeyError, User.DoesNotExist, AttributeError):
+            request.session["to_search_friend"] = "ERROR!"
+            context = {'notfound': to_search}
+            return render(request, 'search/SearchUser.html', context)
 
 
 def mirarPerfil(request, email):
