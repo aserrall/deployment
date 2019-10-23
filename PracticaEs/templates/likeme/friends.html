@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% extends "likeme/BaseLayout.html" %}
+{% load static %}
+
+<link rel="stylesheet"
+href="{% static 'css/style.css' %}" />
+
+{% block content %}
+
+    <h1> Current Friends: </h1>
+    {% if freq_current_friends %}
+        {% for f_req in freq_current_friends %}
+
+            {% if f_req.user_receiver.email  != user.email %}
+                <li>
+                    <form action ="" method="POST">
+                        {% csrf_token %}
+                        <h2>
+                            <a href="{% url 'mirarPerfil' f_req.user_receiver.email %}" name="mirarPerfil">{{f_req.user_receiver.first_name}} {{f_req.user_receiver.last_name}}</a>
+                        </h2>
+                    </form>
+                </li>
+
+            {% else %}
+                <li>
+                    <form action ="" method="POST">
+                        {% csrf_token %}
+                        <h2>
+                            <a href="{% url 'mirarPerfil' f_req.user_sender.email %}" name="mirarPerfil">{{f_req.user_sender.first_name}} {{f_req.user_sender.last_name}}</a>
+                        </h2>
+                    </form>
+                </li>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+  <h1> Friend requests send: </h1>
+    {% if freq_send %}
+        {% for f_req in freq_send %}
+            <li>
+                <form action ="" method="POST">
+                    {% csrf_token %}
+                    <h2>
+                        <a href="{% url 'mirarPerfil' f_req.user_receiver.email %}" name="mirarPerfil">{{f_req.user_receiver.first_name}} {{f_req.user_receiver.last_name}}</a>
+                    </h2>
+                </form>
+            </li>
+        {% endfor %}
+    {% endif %}
+
+    <h1> Pending Friend Requests: </h1>
+    {% if freq_to_accept %}
+        {% for f_req in freq_to_accept %}
+            <li>
+                <form action ="" method="POST">
+                    {% csrf_token %}
+                    <h2>
+                        <a href="{% url 'mirarPerfil' f_req.user_sender.email %}" name="mirarPerfil">{{f_req.user_sender.first_name}} {{f_req.user_sender.last_name}}</a>
+                    </h2>
+                </form>
+            </li>
+        {% endfor %}
+    {% endif %}
+
+
+{% endblock %}
+
+</body>
+</html>

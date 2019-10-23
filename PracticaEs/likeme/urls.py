@@ -12,5 +12,6 @@ urlpatterns = [
     path(r'perfil/', views.mirarPerfil, name='mirarPerfil'),
     path(r'perfil/<email>/', views.mirarPerfil, name='mirarPerfil'),
     path(r'search/', views.search_users, name='search_users'),
+    path(r'friends/', views.friends, name='friends'),
 
     ]
