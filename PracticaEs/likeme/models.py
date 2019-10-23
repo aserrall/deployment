@@ -55,7 +55,7 @@ class LikeMeUser(AbstractBaseUser):
     sex = models.IntegerField(default=0)
     birth_date = models.DateTimeField(default=timezone.now)
     phone_number = models.TextField(default=0)
-    photo = models.ImageField(upload_to='profiles', blank=True, default='profiles/default_user.png')
+    photo = models.ImageField(upload_to='profiles', blank=True, default='static/img/profile_default.png')
 
     join_date = models.DateTimeField(verbose_name='join date', auto_now_add=True)
 

@@ -6,24 +6,36 @@ href="{% static 'css/style.css' %}" />
 
 {% block content %}
     {% if to_search %}
-         <h1> USERS: </h1>
+         <h1> Resultats per: {{to_search.0.first_name}} </h1>
         {% for user in to_search %}
-            <li>
+            <div class="row">
                 <form action ="" method="POST">
                     {% csrf_token %}
+                    <div class="mt-2 col-md-5">
+                    <img align="left" class="img-thumbnail" src="{{user.photo.url}}" />
+                    </div>
+
                     <h2>
-                        <a href="{% url 'mirarPerfil' user.email %}" name="mirarPerfil">{{user.first_name}} {{user.last_name}}</a>
+                        <a href="{% url 'mirarPerfil' user.email %}" name="mirarPerfil"> &nbsp {{user.first_name}} {{user.last_name}}</a>
                         {% if not added %}
-                            <button class="btn btn-primary" type="submit" name="afegirUsuari" value={{user.first_name}}> Afegir</button>
+                            <button class="btn btn-primary" type="submit" name="afegirUsuari" value={{user.first_name}}> Afegir </button>
                         {% else %}
-                            Send!
+                            Enviat!
                         {% endif %}
                     </h2>
+
+                    {% if user.sex == 1 %}
+                        <p> &nbsp&nbsp&nbsp Home</p>
+                    {% else %}
+                        <p> &nbsp&nbsp&nbsp Dona</p>
+                    {% endif %}
+                    <p> &nbsp&nbsp&nbsp {{user.birth_date}}</p>
                 </form>
-            </li>
+            </div>
         {% endfor %}
     {% else %}
-        <h1>The user {{ notfound }} does not exists!</h1>
+        <h1>Vaja! Sembla que no hem trobat cap usuari...</h1>
     {% endif %}
 
 {% endblock %}
+
