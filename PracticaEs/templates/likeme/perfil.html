@@ -14,13 +14,15 @@ href="{% static 'css/style.css' %}" />
 <div>
     <div class="profile">
         <img align="left" class="image-lg" src="https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/images/649694main_pia15417-43_full.jpg" alt="Profile image example"/>
-        <img align="left" class="image-profile thumbnail" src="{{user.photo.url}}"/>
+        <!--<img align="left" class="image-profile thumbnail" src="{{user.photo.url}}"/>-->
+        <img align="left" class="image-profile thumbnail" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"/>
+
         <div class="profile-text">
             <h1>{{user.first_name}} {{user.last_name}}</h1>
             {% if user.sex == 1 %}
-                <p>Home - {{user.phone_number}}</p>
+                <p>Home</p>
             {% else %}
-                <p>Dona - {{user.phone_number}}</p>
+                <p>Dona</p>
             {% endif %}
             <p>{{user.birth_date}}</p>
         </div>
