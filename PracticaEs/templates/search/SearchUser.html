@@ -20,12 +20,6 @@ href="{% static 'css/style.css' %}" />
                         <a href="{% url 'mirarPerfil' user.email %}" name="mirarPerfil"> &nbsp {{user.first_name}} {{user.last_name}}</a>
                         <button class="btn btn-primary" type="submit" name="send_freq" value={{user.email}}> Send Friend Request!</button>
                     </h2>
-                    {% if user.sex == 1 %}
-                        <p> &nbsp&nbsp&nbsp Home</p>
-                    {% else %}
-                        <p> &nbsp&nbsp&nbsp Dona</p>
-                    {% endif %}
-                    <p> &nbsp&nbsp&nbsp {{user.birth_date}}</p>
                 </form>
             </div>
         {% endfor %}
@@ -47,12 +41,6 @@ href="{% static 'css/style.css' %}" />
                             <a href="{% url 'mirarPerfil' f_req.user_receiver.email %}" name="mirarPerfil"> &nbsp {{f_req.user_receiver.first_name}} {{f_req.user_receiver.last_name}}</a>
                             <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Remove</button>
                         </h2>
-                        {% if user.sex == 1 %}
-                            <p> &nbsp&nbsp&nbsp Home</p>
-                        {% else %}
-                            <p> &nbsp&nbsp&nbsp Dona</p>
-                        {% endif %}
-                        <p> &nbsp&nbsp&nbsp {{user.birth_date}}</p>
                     </form>
                 </div>
 
@@ -67,12 +55,6 @@ href="{% static 'css/style.css' %}" />
                             <a href="{% url 'mirarPerfil' f_req.user_sender.email %}" name="mirarPerfil"> &nbsp {{f_req.user_sender.first_name}} {{f_req.user_sender.last_name}}</a>
                             <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Remove</button>
                         </h2>
-                        {% if user.sex == 1 %}
-                            <p> &nbsp&nbsp&nbsp Home</p>
-                        {% else %}
-                            <p> &nbsp&nbsp&nbsp Dona</p>
-                        {% endif %}
-                        <p> &nbsp&nbsp&nbsp {{user.birth_date}}</p>
                     </form>
                 </div>
             {% endif %}
@@ -94,12 +76,6 @@ href="{% static 'css/style.css' %}" />
                         <a href="{% url 'mirarPerfil' f_req.user_receiver.email %}" name="mirarPerfil"> &nbsp {{f_req.user_receiver.first_name}} {{f_req.user_receiver.last_name}}</a>
                         <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Cancel</button>
                     </h2>
-                    {% if user.sex == 1 %}
-                        <p> &nbsp&nbsp&nbsp Home</p>
-                    {% else %}
-                        <p> &nbsp&nbsp&nbsp Dona</p>
-                    {% endif %}
-                    <p> &nbsp&nbsp&nbsp {{user.birth_date}}</p>
                 </form>
             </div>
         {% endfor %}
@@ -121,14 +97,9 @@ href="{% static 'css/style.css' %}" />
                                                <button class="btn btn-primary" type="submit" name="accept_freq" value={{f_req.id}}> Accept</button>
                         <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Cancel</button>
                     </h2>
-                    {% if user.sex == 1 %}
-                        <p> &nbsp&nbsp&nbsp Home</p>
-                    {% else %}
-                        <p> &nbsp&nbsp&nbsp Dona</p>
-                    {% endif %}
-                    <p> &nbsp&nbsp&nbsp {{user.birth_date}}</p>
                 </form>
             </div>
+
         {% endfor %}
     {% endif %}
 
