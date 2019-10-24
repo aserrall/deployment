@@ -13,8 +13,8 @@ href="{% static 'css/style.css' %}" />
                 <form action ="" method="POST">
                     {% csrf_token %}
                     <div class="mt-2 col-md-5">
-                    <!--<img align="left" class="img-thumbnail" src="{{user.photo.url}}" />-->
-                        <img align="left" class="img-thumbnail" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" />
+                     <img align="left" src="{{user.photo.url}}" style="width:75px;height:75px; padding:5px"/>
+                        <!--<img align="left" class="img-thumbnail" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" />-->
                     </div>
                     <h2>
                         <a href="{% url 'mirarPerfil' user.email %}" name="mirarPerfil"> &nbsp {{user.first_name}} {{user.last_name}}</a>
@@ -41,8 +41,7 @@ href="{% static 'css/style.css' %}" />
                     <form action ="" method="POST">
                         {% csrf_token %}
                         <div class="mt-2 col-md-5">
-                        <!--<img align="left" class="img-thumbnail" src="{{user.photo.url}}" />-->
-                            <img align="left" class="img-thumbnail" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" />
+                            <img align="left" src="{{user.photo.url}}" style="width:75px;height:75px; padding:5px"/>
                         </div>
                         <h2>
                             <a href="{% url 'mirarPerfil' f_req.user_receiver.email %}" name="mirarPerfil"> &nbsp {{f_req.user_receiver.first_name}} {{f_req.user_receiver.last_name}}</a>
@@ -62,8 +61,7 @@ href="{% static 'css/style.css' %}" />
                     <form action ="" method="POST">
                         {% csrf_token %}
                         <div class="mt-2 col-md-5">
-                        <!--<img align="left" class="img-thumbnail" src="{{user.photo.url}}" />-->
-                            <img align="left" class="img-thumbnail" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" />
+                             <img align="left" src="{{user.photo.url}}" style="width:75px;height:75px; padding:5px"/>
                         </div>
                         <h2>
                             <a href="{% url 'mirarPerfil' f_req.user_sender.email %}" name="mirarPerfil"> &nbsp {{f_req.user_sender.first_name}} {{f_req.user_sender.last_name}}</a>
@@ -90,8 +88,7 @@ href="{% static 'css/style.css' %}" />
                 <form action ="" method="POST">
                     {% csrf_token %}
                     <div class="mt-2 col-md-5">
-                    <!--<img align="left" class="img-thumbnail" src="{{user.photo.url}}" />-->
-                        <img align="left" class="img-thumbnail" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" />
+                         <img align="left" src="{{user.photo.url}}" style="width:75px;height:75px; padding:5px"/>
                     </div>
                     <h2>
                         <a href="{% url 'mirarPerfil' f_req.user_receiver.email %}" name="mirarPerfil"> &nbsp {{f_req.user_receiver.first_name}} {{f_req.user_receiver.last_name}}</a>
@@ -117,8 +114,7 @@ href="{% static 'css/style.css' %}" />
                 <form action ="" method="POST">
                     {% csrf_token %}
                     <div class="mt-2 col-md-5">
-                    <!--<img align="left" class="img-thumbnail" src="{{user.photo.url}}" />-->
-                        <img align="left" class="img-thumbnail" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" />
+                         <img align="left" src="{{user.photo.url}}" style="width:75px;height:75px; padding:5px"/>
                     </div>
                     <h2>
                         <a href="{% url 'mirarPerfil' f_req.user_sender.email %}" name="mirarPerfil"> &nbsp {{f_req.user_sender.first_name}} {{f_req.user_sender.last_name}}</a>

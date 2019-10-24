@@ -40,8 +40,8 @@ class UserEditorForm(forms.ModelForm):
     email = forms.EmailField(label='Email address', required=True)
     first_name = forms.CharField(label='First Name', required=True)
     last_name = forms.CharField(label='Last Name', required=True)
-    sex = forms.ChoiceField(label='Sex', required=True)
-    birth_date = forms.DateTimeField(label='Birth date', required=True)
+    sex = forms.ChoiceField(label='Sex', widget=forms.RadioSelect(), choices=[('1', 'Home'), ('2', 'Dona')], required=True)
+    birth_date = forms.DateTimeField(label='Birth date', widget=forms.SelectDateWidget(years=list(range(1980, 2020))), required=True)
     phone_number = forms.CharField(label='Phone number', required=True)
     photo = forms.ImageField(label='Photo', required=False)
 
