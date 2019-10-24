@@ -62,3 +62,4 @@ class FriendSearchForm(forms.ModelForm):
     class Meta:
         model = FriendShip
         fields = ["user_sender", "user_receiver"]
+

@@ -14,65 +14,111 @@ href="{% static 'css/style.css' %}" />
 
 {% block content %}
 
-    <h1> Current Friends: </h1>
+    <h1> Friends: </h1>
     {% if freq_current_friends %}
         {% for f_req in freq_current_friends %}
-
             {% if f_req.user_receiver.email  != user.email %}
-                <li>
+                <div class="row">
                     <form action ="" method="POST">
                         {% csrf_token %}
+                        <div class="mt-2 col-md-5">
+                        <!--<img align="left" class="img-thumbnail" src="{{user.photo.url}}" />-->
+                            <img align="left" class="img-thumbnail"  src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" />
+                        </div>
                         <h2>
-                            <a href="{% url 'mirarPerfil' f_req.user_receiver.email %}" name="mirarPerfil">{{f_req.user_receiver.first_name}} {{f_req.user_receiver.last_name}}</a>
+                            <a href="{% url 'mirarPerfil' f_req.user_receiver.email %}" name="mirarPerfil"> &nbsp {{f_req.user_receiver.first_name}} {{f_req.user_receiver.last_name}}</a>
                             <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Remove</button>
                         </h2>
+                        {% if user.sex == 1 %}
+                            <p> &nbsp&nbsp&nbsp Home</p>
+                        {% else %}
+                            <p> &nbsp&nbsp&nbsp Dona</p>
+                        {% endif %}
+                        <p> &nbsp&nbsp&nbsp {{user.birth_date}}</p>
                     </form>
-                </li>
+                </div>
 
             {% else %}
-                <li>
+                <div class="row">
                     <form action ="" method="POST">
                         {% csrf_token %}
+                        <div class="mt-2 col-md-5">
+                        <!--<img align="left" class="img-thumbnail" src="{{user.photo.url}}" />-->
+                            <img align="left" class="img-thumbnail" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" />
+                        </div>
                         <h2>
-                            <a href="{% url 'mirarPerfil' f_req.user_sender.email %}" name="mirarPerfil">{{f_req.user_sender.first_name}} {{f_req.user_sender.last_name}}</a>
+                            <a href="{% url 'mirarPerfil' f_req.user_sender.email %}" name="mirarPerfil"> &nbsp {{f_req.user_sender.first_name}} {{f_req.user_sender.last_name}}</a>
                             <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Remove</button>
                         </h2>
+                        {% if user.sex == 1 %}
+                            <p> &nbsp&nbsp&nbsp Home</p>
+                        {% else %}
+                            <p> &nbsp&nbsp&nbsp Dona</p>
+                        {% endif %}
+                        <p> &nbsp&nbsp&nbsp {{user.birth_date}}</p>
                     </form>
-                </li>
+                </div>
             {% endif %}
         {% endfor %}
+    {% else %}
+        <p> Go find some friends! </p>
     {% endif %}
 
-  <h1> Friend requests send: </h1>
+    &nbsp
+    <h1> Sent Friend requests: </h1>
     {% if freq_send %}
         {% for f_req in freq_send %}
-            <li>
+            <div class="row">
                 <form action ="" method="POST">
                     {% csrf_token %}
+                    <div class="mt-2 col-md-5">
+                    <!--<img align="left" class="img-thumbnail" src="{{user.photo.url}}" />-->
+                        <img align="left" class="img-thumbnail" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" />
+                    </div>
                     <h2>
-                        <a href="{% url 'mirarPerfil' f_req.user_receiver.email %}" name="mirarPerfil">{{f_req.user_receiver.first_name}} {{f_req.user_receiver.last_name}}</a>
+                        <a href="{% url 'mirarPerfil' f_req.user_receiver.email %}" name="mirarPerfil"> &nbsp {{f_req.user_receiver.first_name}} {{f_req.user_receiver.last_name}}</a>
                         <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Cancel</button>
                     </h2>
+                    {% if user.sex == 1 %}
+                        <p> &nbsp&nbsp&nbsp Home</p>
+                    {% else %}
+                        <p> &nbsp&nbsp&nbsp Dona</p>
+                    {% endif %}
+                        <p> &nbsp&nbsp&nbsp {{user.birth_date}}</p>
                 </form>
-            </li>
+            </div>
         {% endfor %}
+    {% else %}
+        <p> You have no friend requests sent! </p>
     {% endif %}
 
+    &nbsp
     <h1> Pending Friend Requests: </h1>
     {% if freq_to_accept %}
         {% for f_req in freq_to_accept %}
-            <li>
+            <div class="row">
                 <form action ="" method="POST">
                     {% csrf_token %}
+                    <div class="mt-2 col-md-5">
+                    <!--<img align="left" class="img-thumbnail" src="{{user.photo.url}}" />-->
+                        <img align="left" class="img-thumbnail" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" />
+                    </div>
                     <h2>
-                        <a href="{% url 'mirarPerfil' f_req.user_sender.email %}" name="mirarPerfil">{{f_req.user_sender.first_name}} {{f_req.user_sender.last_name}}</a>
+                        <a href="{% url 'mirarPerfil' f_req.user_sender.email %}" name="mirarPerfil"> &nbsp {{f_req.user_sender.first_name}} {{f_req.user_sender.last_name}}</a>
                         <button class="btn btn-primary" type="submit" name="accept_freq" value={{f_req.id}}> Accept</button>
                         <button class="btn btn-primary" type="submit" name="cancel_freq" value={{f_req.id}}> Cancel</button>
-
                     </h2>
+                    {% if user.sex == 1 %}
+                        <p> &nbsp&nbsp&nbsp Home</p>
+                    {% else %}
+                        <p> &nbsp&nbsp&nbsp Dona</p>
+                    {% endif %}
+                    <p> &nbsp&nbsp&nbsp {{user.birth_date}}</p>
                 </form>
-            </li>
+            </div>
         {% endfor %}
+    {% else %}
+        <p> You have no pending requests! </p>
     {% endif %}
 
 

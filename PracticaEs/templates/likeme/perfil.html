@@ -11,28 +11,26 @@
 href="{% static 'css/style.css' %}" />
 
 {% block content %}
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <div>
     <div class="profile">
         <img align="left" class="image-lg" src="https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/images/649694main_pia15417-43_full.jpg" alt="Profile image example"/>
-        <img align="left" class="image-profile thumbnail" src="https://bootdey.com/img/Content/user-453533-fdadfd.png" alt="Profile image example"/>
+        <!--<img align="left" class="image-profile thumbnail" src="{{user.photo.url}}"/>-->
+        <img align="left" class="image-profile thumbnail" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"/>
+
         <div class="profile-text">
-            <h1>{{client.user}}</h1>
-            {% if client.sexo == 1 %}
-                <p>Home - {{client.phone_number}}</p>
+            <h1>{{user.first_name}} {{user.last_name}}</h1>
+            {% if user.sex == 1 %}
+                <p>Home</p>
             {% else %}
-                <p>Dona, {{client.phone_number}}</p>
+                <p>Dona</p>
             {% endif %}
-            <p>{{client.birth_date}}</p>
+            <p>{{user.birth_date}}</p>
         </div>
 
         POSTS
 
-
     </div>
-</div>
-<div>
-        <a href = "{% url 'forum' %}"> Forum</a>
+
 </div>
 {% endblock %}
 </body>
