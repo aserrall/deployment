@@ -1,0 +1,16 @@
+{% extends "likeme/BaseLayout.html" %}
+{% load static %}
+
+<link rel="stylesheet"
+href="{% static 'css/style.css' %}" />
+
+{% block content %}
+<body>
+
+    {% if form.errors %}
+        <center><p class="error">Sorry, that's not a valid username or password</p></center>
+    {% endif %}
+
+</body>
+{% endblock %}
+</html>
