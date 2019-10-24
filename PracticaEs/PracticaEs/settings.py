@@ -126,5 +126,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
 
+
+# Images
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 LOGIN_REDIRECT_URL = '/foro'
 LOGOUT_REDIRECT_URL = '/'
