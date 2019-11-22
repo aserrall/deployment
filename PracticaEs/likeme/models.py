@@ -119,3 +119,10 @@ class FriendShip(models.Model):
 
     def __str__(self):
         return "FriendShip from " + str(self.user_sender) + " to " + str(self.user_receiver)
+
+
+class Posteig(models.Model):
+    id = models.AutoField(primary_key=True)
+    content = models.CharField(max_length=200)
+    user_post = models.ForeignKey(User, on_delete=models.CASCADE)
+    creation_date = models.DateTimeField(auto_now_add=True)

@@ -43,6 +43,9 @@ def register(request):
 @login_required()
 def forum(request):
     context = {}
+    if request.method == 'POST':
+        Posteig.objects.create(content=request.POST['content_post'], user_post=request.user)
+
     return render(request, 'likeme/foro.html', context)
 
 
