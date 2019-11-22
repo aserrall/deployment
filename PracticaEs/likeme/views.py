@@ -166,10 +166,7 @@ def search_users(request):
 def mirarPerfil(request, email):
     try:
         u = User.objects.get(email=email)
-        print ("hola") 
         posts = Posteig.objects.filter(user_post=u).order_by('-creation_date').reverse()
-        print ("adeu")
-        print (posts)
         context = {
             'client': u,
             'posts': posts
