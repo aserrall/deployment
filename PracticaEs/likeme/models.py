@@ -126,3 +126,12 @@ class Posteig(models.Model):
     content = models.CharField(max_length=200)
     user_post = models.ForeignKey(User, on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
+
+
+class Comments(models.Model):
+    id = models.AutoField(primary_key=True)
+    content = models.CharField(max_length=200)
+    user_post = models.ForeignKey(User, on_delete=models.CASCADE)
+    posteig_id= models.ForeignKey(Posteig, on_delete=models.CASCADE)
+    creation_date = models.DateTimeField(auto_now_add=True)
+
