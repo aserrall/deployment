@@ -28,7 +28,23 @@ href="{% static 'css/style.css' %}" />
         </div>
 
         POSTS
+        <form action="" method="POST">
+        {% csrf_token %}
+            <input type="text" name="content_response" >
+            <input type="submit" value= "respe" >
+        
+	{% for p in posts %}       
+	    <input type=checkbox name="post_id" id="post_id" value="{{p.0.id}}" />
+	    <h4> {{ p.0.content }} </h4>
+	    <h5> {{ p.0.creation_date }} </h5>
+	    <h3> Comentaris </h3>
+            {% for c in p.1 %}
+	        <h6> {{ c.content }} </h6>
+	    {% endfor %}
+ 
+	    {% endfor %}
 
+	</form>
     </div>
 
 </div>
