@@ -18,3 +18,4 @@ class UserAdmin(admin.ModelAdmin):
 
 admin.site.register(User, UserAdmin)
 admin.site.register(FriendShip)
+admin.site.register(Posteig)

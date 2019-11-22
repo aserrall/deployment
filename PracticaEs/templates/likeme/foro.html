@@ -6,5 +6,9 @@ href="{% static 'css/style.css' %}" />
 
 {% block content %}
     <h1>You are logged in as: {{ user }}</h1>
-
+    <form action ="" method="POST">
+	    {% csrf_token %}
+	    <input type="text" name="content_post">
+	    <input type="submit" value="Post">
+    </form>
 {% endblock %}
