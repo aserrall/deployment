@@ -164,12 +164,24 @@ def search_users(request):
 
 
 def mirarPerfil(request, email):
+    if request.method == "POST":
+        try:
+            pr = Posteig.objects.get(id=request.POST['post_id'])
+            Comments.objects.create(content=request.POST['content_response'], user_post=request.user, posteig_id = pr)
+        except:
+            pass
     try:
+        l = []
         u = User.objects.get(email=email)
         posts = Posteig.objects.filter(user_post=u).order_by('-creation_date').reverse()
+        for p in posts:
+            q = Comments.objects.filter(posteig_id=p.id)
+            t = (p, q)
+            l.append(t)
+           
         context = {
             'client': u,
-            'posts': posts
+            'posts': l 
             }
     except:
         context = {}
