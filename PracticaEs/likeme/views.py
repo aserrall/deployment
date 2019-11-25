@@ -43,9 +43,30 @@ def register(request):
 @login_required()
 def forum(request):
     context = {}
-    if request.method == 'POST':
-        Posteig.objects.create(content=request.POST['content_post'], user_post=request.user)
 
+    if request.method == 'POST':
+        if request.POST['val'] == "Post":
+            Posteig.objects.create(content=request.POST['content_post'], user_post=request.user)
+        if request.POST['val'] == "Comment":
+            try:
+                pr = Posteig.objects.get(id=request.POST['post_id'])
+                Comments.objects.create(content=request.POST['content_comment'], user_post=request.user, posteig_id = pr)
+            except:
+                pass
+
+    l = []
+    #--------------------------------------------
+    #modificar aquesta linea perque agafi nomes els posts dels amics
+    posts = Posteig.objects.filter().all()
+    #--------------------------------------------
+    for p in posts:
+        q = Comments.objects.filter(posteig_id=p.id)
+        t = (p, q)
+        l.append(t)
+
+    context = {
+        'posts': l
+    }
     return render(request, 'likeme/foro.html', context)
 
 
