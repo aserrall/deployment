@@ -26,7 +26,7 @@ nav {
 }
 #buscarUsuarinav{
 	height: 45px;
-	transform: translateX(-62%);
+	transform: translateX(-54%);
 }
 #buscarnav{
 	transform: translateY(-15%);
@@ -77,6 +77,19 @@ div {
   padding-right: 20px;
   padding-bottom: 10px;
   padding-left: 50px;
+}
+
+/* Body */
+#cuerpo {
+	background-color: #E0E0FF;
+}
+
+/* PERFIL */
+#fotoperfil{
+	border-radius: 100% !important;
+	border-style: solid;
+	border-width: 5px;
+	border-color: white;
 }
 
 .profile img.image-lg{
