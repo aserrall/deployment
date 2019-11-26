@@ -18,10 +18,14 @@ href="{% static 'css/style.css' %}" />
             <input type="submit" name="val" value="Comment">
             {% for p in posts %}
                 <input type=checkbox name="post_id" id="post_id" value = "{{p.0.id}}" />
-		<h5> {{ p.0.content }} </h5>
+
+        <h1>POST:</h1><h8>Posted By: {{ p.0.user_post}}</h8>
+         <h2><pre>{{ p.0.content }} </pre></h2>
+
 		<h3> Comentaris </h3>
 		{% for c in p.1 %}
-		    <h6> {{c.content }} </h6>
+            <h8>Posted By: {{ c.user_post}}</h8>
+        <h6><pre>&#9{{c.content }} </pre></h6>
 		{% endfor %}
             {% endfor %}
     </form>

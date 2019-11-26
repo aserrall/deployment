@@ -55,10 +55,13 @@ def forum(request):
                 pass
 
     l = []
-    #--------------------------------------------
-    #modificar aquesta linea perque agafi nomes els posts dels amics
-    posts = Posteig.objects.filter().all()
-    #--------------------------------------------
+
+    freq_current_friends = FriendShip.objects.filter(Q(user_sender=request.user, accepted=True)
+                                                     | Q(user_receiver=request.user, accepted=True))
+    friends = [x.user_sender if x.user_sender != request.user else x.user_receiver for x in freq_current_friends]
+
+    posts = Posteig.objects.filter(user_post__in=friends).exclude(user_post=request.user)
+
     for p in posts:
         q = Comments.objects.filter(posteig_id=p.id)
         t = (p, q)
