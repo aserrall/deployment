@@ -13,10 +13,13 @@ href="{% static 'css/style.css' %}" />
 {% block content %}
 <div>
     <div class="profile">
-        <img align="left" class="image-lg" src="https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/images/649694main_pia15417-43_full.jpg" alt="Profile image example"/>
-        <img align="left" class="image-profile thumbnail" id="fotoperfil" src="{{user.photo.url}}"/>
+
+            <img align="left" class="image-lg" src="https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/images/649694main_pia15417-43_full.jpg" alt="Profile image example"/>
+            <img align="left" class="image-profile thumbnail" id="fotoperfil" src="{{user.photo.url}}"/>
+
+
          <!--<img align="left" class="image-profile thumbnail" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"/>-->
-        <div class="container" id="userinfo">
+        <div id="userinfo">
             <div class="profile-text">
                 <h5>{{user.first_name}} {{user.last_name}}</h5>
             </div>
@@ -35,14 +38,18 @@ href="{% static 'css/style.css' %}" />
                 </div>
             </div>
         </div>
-        <div class="profile-text">
+        <div class="md-col-4" id="informacioperfil">
+            <div class="profile-text">
+                <h2>Presentació</h2>
                 {% if user.sex == 1 %}
                     <p>Home</p>
                 {% else %}
                     <p>Dona</p>
                 {% endif %}
                 <p>{{user.birth_date}}</p>
+            </div>
         </div>
+
         POSTS
         <form action="" method="POST">
         {% csrf_token %}
