@@ -195,7 +195,7 @@ def mirarPerfil(request, email):
     try:
         l = []
         u = User.objects.get(email=email)
-        posts = Posteig.objects.filter(user_post=u).order_by('-creation_date').reverse()
+        posts = Posteig.objects.filter(user_post=u).order_by('-creation_date')
         for p in posts:
             q = Comments.objects.filter(posteig_id=p.id)
             t = (p, q)
