@@ -59,21 +59,34 @@ href="{% static 'css/style.css' %}" />
 
                 <form action ="" method="POST">
                     {% csrf_token %}
-                    <input type="text" name="content_post">
-                    <input type="submit" name="val" value="Post">
+                    <div id="perfilpost">
+                        <div class="row">
+                            <div class="about-img" id="perfilpostfoto"><img src="{{user.photo.url}}" class="img-responsive" alt=""></div>
+                            <textarea class="form-control" id="perfilposttext" name="content_post" rows="4" placeholder="Comenta..."></textarea>
+                        </div>
 
+                        <input type="submit" name="val" value="Post" id="perfilpostbutton">
+                    </div>
 
-
-                {% for p in posts %}
-                <input type=checkbox name="post_id" id="post_id" value="{{p.0.id}}" />
-                <h4> {{ p.0.content }} </h4>
-                <h5> {{ p.0.creation_date }} </h5>
-                <h3> Comentaris </h3>
-                    {% for c in p.1 %}
-                    <h6> {{ c.content }} </h6>
-                {% endfor %}
-
-                {% endfor %}
+                    {% for p in posts %}
+                        <div class="post-bar">
+                            <div class="row" id="perfilcommentrow1">
+                                <div class="about-img" id="perfilimgcomment"><img src="{{user.photo.url}}" class="img-responsive" alt=""></div>
+                                <div id="perfilcommentnom">
+                                    <h2>{{user.first_name}} {{user.last_name}}</h2>
+                                    <h5> {{ p.0.creation_date }} </h5>
+                                </div>
+                                <input type=checkbox name="post_id" id="post_id" value="{{p.0.id}}" />
+                            </div>
+                            <h4> {{ p.0.content }} </h4>
+                            <div class="container" id="perfilcommentcomment">
+                                <h3> Comentaris </h3>
+                                    {% for c in p.1 %}
+                                    <h6> {{ c.content }} </h6>
+                            {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
 
                 </form>
             </div>
