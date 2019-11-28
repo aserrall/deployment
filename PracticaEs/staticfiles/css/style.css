@@ -22,11 +22,11 @@ nav {
 
 /*LOGED*/
 #logoaut{
-	transform: translateX(260%);
+	transform: translateX(360%);
 }
 #buscarUsuarinav{
 	height: 45px;
-	transform: translateX(-54%);
+	transform: translateX(-75%);
 }
 #buscarnav{
 	transform: translateY(-15%);
@@ -132,28 +132,60 @@ div {
 }
 
 #barraperfil{
-    transform: translate(24%,-120%);
+    transform: translateY(-120%);
+	align-content: end;
+}
+#barraperfil .col-md-2{
+	transform: translateX(150%);
 }
 #barraperfil a{
     font-size: 20px;
     color: #0b498f;
 }
 
-#informacioperfil {
-	margin: 20px 0 0 0;
+#informacioperfil{
+	margin: 20px 0 0;
+}
+#informacioperfil .profile-text{
 	background-color: white;
-	width: 20%;
 	border-radius: 25px;
+	width: 130%;
+	transform: translateX(-29%);
+	margin-bottom: 40px;
 }
 
 #informacioperfil h2{
-	font-size: 20px;
+	text-align: center;
+	transform: translateX(-10%);
 	color: #0b498f;
-	transform: translateX(-70%);
+	font-size: 30px;
+	margin: 0 0 40px 0;
 }
 #informacioperfil p{
 	text-align: left;
-	transform: translateX(-70%);
+	transform: translateX(-0%);
+}
+#perfilcol3{
+	margin: 20px 0 0 0;
+	width: 23%;
+}
+#perfilcol3 .profile-text{
+	border-radius: 25px;
+	background-color: white;
+	width: 130%;
+	min-height: 100px;
+}
+#perfilcol3 h2{
+	color: #0b498f;
+	font-size: 30px;
+	text-align: center;
+	transform: translateX(-10%);
+}
+#perfilfeed {
+	background-color: white;
+	border-radius: 25px;
+	margin: 20px 0 0 0;
+	width: 50%;
 }
 @media (max-width:768px) {
 

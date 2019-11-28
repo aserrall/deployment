@@ -69,7 +69,6 @@ def forum(request):
     }
     return render(request, 'likeme/foro.html', context)
 
-
 @login_required()
 def friends(request):
     if request.method == "POST":
@@ -186,6 +185,8 @@ def search_users(request):
 
 def mirarPerfil(request, email):
     if request.method == "POST":
+        if request.POST['val'] == "Post":
+            Posteig.objects.create(content=request.POST['content_post'], user_post=request.user)
         try:
             pr = Posteig.objects.get(id=request.POST['post_id'])
             Comments.objects.create(content=request.POST['content_response'], user_post=request.user, posteig_id = pr)
