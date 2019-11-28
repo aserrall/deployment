@@ -2,31 +2,52 @@
 {% load static %}
 
 <link rel="stylesheet"
-href="{% static 'css/style.css' %}" />
+      href="{% static 'css/style.css' %}" />
 
 {% block content %}
-    <h1>You are logged in as: {{ user }}</h1>
-    <form action ="" method="POST">
-	    {% csrf_token %}
-	    <input type="text" name="content_post">
-	    <input type="submit" name="val" value="Post">
-    </form>
+<h1>You are logged in as: {{ user }}</h1>
+<form action ="" method="POST">
+    {% csrf_token %}
+    <input type="text" name="content_post">
+    <input type="submit" name="post_value" value="Post">
+</form>
 
-    <form action ="" method="POST">
-            {% csrf_token %}
-            <input type="text" name="content_comment">
-            <input type="submit" name="val" value="Comment">
-            {% for p in posts %}
-                <input type=checkbox name="post_id" id="post_id" value = "{{p.0.id}}" />
+<form action ="" method="POST">
+    {% csrf_token %}
 
-        <h1>POST:</h1><h8>Posted By: {{ p.0.user_post}}</h8>
-         <h2><pre>{{ p.0.content }} </pre></h2>
+    {% for p in posts %}
 
-		<h3> Comentaris </h3>
-		{% for c in p.1 %}
-            <h8>Posted By: {{ c.user_post}}</h8>
-        <h6><pre>&#9{{c.content }} </pre></h6>
-		{% endfor %}
+
+    <h1>POST:</h1><h8>Posted By: {{ p.0.user_post}}</h8>
+    <h2><pre>{{ p.0.content }} </pre></h2>
+
+    <input type="text" name="content_comment-{{p.0.id}}">
+    <button class="btn btn-primary" id="post_id" type="submit" name="comment_value" value={{p.0.id}}> Comment</button>
+
+        <h3> Comentaris </h3>
+        {% for c in p.1 %} <!-- [(C,[])]-->
+
+            <h8>Comment By: {{ c.0.user_post}}</h8>
+            <h6><pre>&#9{{c.0.content }} </pre></h6>
+
+
+
+            <h3>Replies
+                <h8>
+                <input type="text" name="content_reply-{{c.0.id}}">
+                <button class="btn btn-primary" id="comment_id" type="submit" name="reply_value" value={{c.0.id}}> Reply</button>
+            </h8></h3>
+            {% for r in c.1 %}
+                <h8>Reply By: {{ r.user_post}}</h8>
+                <h6><pre>&#9{{r.content }} </pre></h6>
+
             {% endfor %}
-    </form>
+
+        {% endfor %}
+
+
+    {% endfor %}
+
+
+</form>
 {% endblock %}
