@@ -146,6 +146,9 @@ div {
 	#informacioperfil{
 		margin: 20px 0 0;
 	}
+    #informacioperfil h4{
+		color: #0b498f;
+	}
 	#informacioperfil .profile-text{
 		background-color: white;
 		border-radius: 25px;
