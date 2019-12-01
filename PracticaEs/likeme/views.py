@@ -202,18 +202,29 @@ def search_users(request):
 
 def mirarPerfil(request, email):
     if request.method == "POST":
-        try:
-            pr = Posteig.objects.get(id=request.POST['post_id'])
-            Comments.objects.create(content=request.POST['content_response'], user_post=request.user, posteig_id=pr)
-        except:
-            pass
+        if "comment_value" in request.POST:
+            try:
+                id = request.POST['comment_value']
+                pr = Posteig.objects.get(id=id)
+                Comments.objects.create(content=request.POST['content_comment-' + id], user_post=request.user,
+                                        posteig_id=pr)
+            except:
+                pass
+        elif "reply_value" in request.POST:
+            try:
+                id = request.POST['reply_value']
+                c = Comments.objects.get(id=id)
+                Reply.objects.create(content=request.POST['content_reply-'+id], user_post=request.user, posteig_id=c)
+            except:
+                pass
     try:
         l = []
         u = User.objects.get(email=email)
         posts = Posteig.objects.filter(user_post=u).order_by('-creation_date')
         for p in posts:
-            q = Comments.objects.filter(posteig_id=p.id)
-            t = (p, q)
+            comments = Comments.objects.filter(posteig_id=p.id)
+            tr = [(q, Reply.objects.filter(posteig_id=q)) for q in comments]
+            t = (p, tr)
             l.append(t)
 
         context = {
