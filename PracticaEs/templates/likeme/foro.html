@@ -27,20 +27,32 @@
         <h3> Comentaris </h3>
         {% for c in p.1 %} <!-- [(C,[])]-->
 
-            <h8>Comment By: {{ c.0.user_post}}</h8>
-            <h6><pre>&#9{{c.0.content }} </pre></h6>
+            <div id="comment-{{ c.0.id }}" >
+                <h8>Comment By: {{ c.0.user_post}}</h8>
+                <h6><pre>&#9{{c.0.content }} <button type="button" onclick="showDiv('comments-'+{{ c.0.id }})">Reply</button></pre></h6>
+            <pre>
+                <h5>Replies</h5>
+            </pre>
+            </div>
 
+            <div id="comments-{{ c.0.id }}" style="display:none">
+                    <h8>
+                    <input type="text" name="content_reply-{{c.0.id}}">
+                    <button class="btn btn-primary" id="comment_id" type="submit" name="reply_value" value={{c.0.id}}> Reply</button>
+                </h8>
+            </div>
 
-
-            <h3>Replies
-                <h8>
-                <input type="text" name="content_reply-{{c.0.id}}">
-                <button class="btn btn-primary" id="comment_id" type="submit" name="reply_value" value={{c.0.id}}> Reply</button>
-            </h8></h3>
             {% for r in c.1 %}
+                <pre>
                 <h8>Reply By: {{ r.user_post}}</h8>
-                <h6><pre>&#9{{r.content }} </pre></h6>
-
+                <h6><pre>&#9{{r.content }}  <button type="button" onclick="showDiv('c{{ c.0.id }}r{{r.id}}')">Reply</button> </pre></h6><!-- <a href="" onclick="">Reply</a> -->
+            <div id="c{{ c.0.id }}r{{r.id}}" style="display:none">
+                    <h8>
+                    <input type="text" name="content_reply-{{c.0.id}}">
+                    <button class="btn btn-primary" id="comment_id" type="submit" name="reply_value" value={{c.0.id}}> Reply</button>
+                </h8>
+            </div>
+                </pre>
             {% endfor %}
 
         {% endfor %}
@@ -50,4 +62,19 @@
 
 
 </form>
+
+<script type="text/javascript">
+    function showDiv(comment) {
+
+        console.debug(comment)
+        var x = document.getElementById(comment)
+        if (x.style.display === "none") {
+        x.style.display = "block";
+        } else {
+        x.style.display = "none";
+        }
+
+    }
+</script>
+
 {% endblock %}
