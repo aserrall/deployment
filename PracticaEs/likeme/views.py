@@ -45,12 +45,22 @@ def forum(request):
     context = {}
 
     if request.method == 'POST':
-        if request.POST['val'] == "Post":
+
+        if "post_value" in request.POST:
             Posteig.objects.create(content=request.POST['content_post'], user_post=request.user)
-        if request.POST['val'] == "Comment":
+        elif "comment_value" in request.POST:
             try:
-                pr = Posteig.objects.get(id=request.POST['post_id'])
-                Comments.objects.create(content=request.POST['content_comment'], user_post=request.user, posteig_id = pr)
+                id = request.POST['comment_value']
+                pr = Posteig.objects.get(id=id)
+                Comments.objects.create(content=request.POST['content_comment-' + id], user_post=request.user,
+                                        posteig_id=pr)
+            except:
+                pass
+        elif "reply_value" in request.POST:
+            try:
+                id = request.POST['reply_value']
+                c = Comments.objects.get(id=id)
+                Reply.objects.create(content=request.POST['content_reply-'+id], user_post=request.user, posteig_id=c)
             except:
                 pass
 
@@ -61,10 +71,13 @@ def forum(request):
     friends = [x.user_sender if x.user_sender != request.user else x.user_receiver for x in freq_current_friends]
 
     posts = Posteig.objects.filter(user_post__in=friends).exclude(user_post=request.user)
+    # [ [P1, [(c,R)]   ], P2, PN]
+    # [ (P1, [(C1,[R]), (C1,[R])])]
 
     for p in posts:
-        q = Comments.objects.filter(posteig_id=p.id)
-        t = (p, q)
+        comments = Comments.objects.filter(posteig_id=p.id)
+        tr = [(q, Reply.objects.filter(posteig_id=q)) for q in comments]
+        t = (p, tr)
         l.append(t)
 
     context = {
@@ -133,17 +146,17 @@ def search_users(request):
 
     if request.method == "GET":
         to_search = request.session["to_search_friend"]
-        #print(to_search)
+        # print(to_search)
         try:
             users_found = User.objects.filter(first_name__icontains=to_search).exclude(email=request.user.email)
-            #print(users_found)
+            # print(users_found)
             l_freq_current_friends = []
             l_freq_send = []
             l_freq_to_accept = []
             l_possible_users = []
 
             for u in users_found:
-                #print(u)
+                # print(u)
                 freq_current_friends = FriendShip.objects.filter(
                     Q(user_sender=u, user_receiver=request.user, accepted=True) |
                     Q(user_sender=request.user, user_receiver=u, accepted=True))
@@ -153,9 +166,9 @@ def search_users(request):
 
                 freq_to_accept = FriendShip.objects.filter(user_sender=u, user_receiver=request.user,
                                                            accepted=False)
-                #print(freq_current_friends)
-                #print(freq_send)
-                #print(freq_to_accept)
+                # print(freq_current_friends)
+                # print(freq_send)
+                # print(freq_to_accept)
 
                 if not freq_current_friends and not freq_send and not freq_to_accept:
                     l_possible_users.append(u)
@@ -167,10 +180,10 @@ def search_users(request):
                     if freq_to_accept:
                         l_freq_to_accept += freq_to_accept
 
-                #print(l_possible_users)
-                #print(l_freq_to_accept)
-                #print(l_freq_current_friends)
-                #print(l_freq_send)
+                # print(l_possible_users)
+                # print(l_freq_to_accept)
+                # print(l_freq_current_friends)
+                # print(l_freq_send)
 
             context = {
                 "l_freq_current_friends": l_freq_current_friends,
@@ -189,24 +202,35 @@ def search_users(request):
 
 def mirarPerfil(request, email):
     if request.method == "POST":
-        try:
-            pr = Posteig.objects.get(id=request.POST['post_id'])
-            Comments.objects.create(content=request.POST['content_response'], user_post=request.user, posteig_id = pr)
-        except:
-            pass
+        if "comment_value" in request.POST:
+            try:
+                id = request.POST['comment_value']
+                pr = Posteig.objects.get(id=id)
+                Comments.objects.create(content=request.POST['content_comment-' + id], user_post=request.user,
+                                        posteig_id=pr)
+            except:
+                pass
+        elif "reply_value" in request.POST:
+            try:
+                id = request.POST['reply_value']
+                c = Comments.objects.get(id=id)
+                Reply.objects.create(content=request.POST['content_reply-'+id], user_post=request.user, posteig_id=c)
+            except:
+                pass
     try:
         l = []
         u = User.objects.get(email=email)
-        posts = Posteig.objects.filter(user_post=u).order_by('-creation_date').reverse()
+        posts = Posteig.objects.filter(user_post=u).order_by('-creation_date')
         for p in posts:
-            q = Comments.objects.filter(posteig_id=p.id)
-            t = (p, q)
+            comments = Comments.objects.filter(posteig_id=p.id)
+            tr = [(q, Reply.objects.filter(posteig_id=q)) for q in comments]
+            t = (p, tr)
             l.append(t)
-           
+
         context = {
             'client': u,
-            'posts': l 
-            }
+            'posts': l
+        }
     except:
         context = {}
 
