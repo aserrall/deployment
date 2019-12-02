@@ -71,8 +71,8 @@ def forum(request):
     friends = [x.user_sender if x.user_sender != request.user else x.user_receiver for x in freq_current_friends]
 
     posts = Posteig.objects.filter(user_post__in=friends).exclude(user_post=request.user)
-    # [ [P1, [(c,R)]   ], P2, PN]
-    # [ (P1, [(C1,[R]), (C1,[R])])]
+    # [ [P1, [(c,R)] ], P2, PN]
+    # [ (P1, [(C1,[R]), (C1,[R])] ) ]
 
     for p in posts:
         comments = Comments.objects.filter(posteig_id=p.id)

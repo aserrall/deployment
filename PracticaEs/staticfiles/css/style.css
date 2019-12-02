@@ -22,11 +22,11 @@ nav {
 
 /*LOGED*/
 #logoaut{
-	transform: translateX(260%);
+	transform: translateX(360%);
 }
 #buscarUsuarinav{
 	height: 45px;
-	transform: translateX(-62%);
+	transform: translateX(-75%);
 }
 #buscarnav{
 	transform: translateY(-15%);
@@ -72,6 +72,7 @@ nav {
 color: white !important;
 }
 
+
 div {
   padding-top: 10px;
   padding-right: 20px;
@@ -79,25 +80,197 @@ div {
   padding-left: 50px;
 }
 
-.profile img.image-lg{
-    z-index: 0;
-    width: 100%;
-	object-fit: cover;
-  	max-height: 500px;
+
+/* Body */
+#cuerpo {
+	background-color: #E0E0FF;
 }
 
-.image-profile {
-    margin: -90px 10px 0px 50px;
-    z-index: 9;
-    width: 12%;
-}
+/* PERFIL */
 
+	#fotoperfil{
+		border-radius: 100% !important;
+		border-style: solid;
+		border-width: 5px;
+		border-color: #EEE;
+	}
+
+	.profile img.image-lg{
+		z-index: 0;
+		width: 100%;
+		object-fit: cover;
+		max-height: 400px;
+	}
+
+	.image-profile {
+		margin: -110px 10px 0px 50px;
+		z-index: 9;
+		width: 12%;
+	}
+
+	#userinfo{
+		width: 100%;
+		background-color : white;
+		height: 450px;
+	}
+
+
+	#nomperfil{
+		transform: translateY(-10%);
+	}
+
+	.profile-text>h5{
+		margin: -50px 0 20px 0;
+		transform: translateY(-16%);
+		font-weight: 10px;
+		font-size: 38px;
+		text-align: left;
+		text-transform: uppercase;
+		-webkit-text-fill-color: white; /* Will override color (regardless of order) */
+		-webkit-text-stroke-width: 1px;
+		-webkit-text-stroke-color: black;
+	}
+
+	#barraperfil{
+		transform: translateY(-120%);
+
+	}
+	#barraperfil .col-md-2{
+		transform: translateX(150%);
+	}
+	#barraperfil a{
+		font-size: 20px;
+		color: #0b498f;
+	}
+
+	#informacioperfil{
+		margin: 20px 0 0;
+	}
+    #informacioperfil h4{
+		color: #0b498f;
+	}
+	#informacioperfil .profile-text{
+		background-color: white;
+		border-radius: 25px;
+		width: 130%;
+		transform: translateX(-29%);
+		margin-bottom: 40px;
+	}
+
+	#informacioperfil h2{
+		text-align: center;
+		transform: translateX(-10%);
+		color: #0b498f;
+		font-size: 30px;
+		margin: 0 0 40px 0;
+	}
+	#informacioperfil p{
+		text-align: left;
+		transform: translateX(-0%);
+	}
+
+	#perfilpost{
+		background-color: white;
+		border-radius: 25px;
+		margin-bottom: 40px;
+	}
+	#perfilpostfoto{
+		height: 60px;
+		width: 60px;
+		border-radius: 100px;
+		margin: 0 0 -47px -100px;
+	}
+	#perfilpostfoto .img-responsive{
+		height: 60px;
+		width: 60px;
+		border-radius: 100px;
+	}
+	#perfilposttext{
+		border-radius: 0 !important;
+		border: none !important;
+		margin: 0 50px 0 20px;
+	}
+	#perfilpostbutton{
+		width: 90%;
+		background-color: #EEE;
+		border: 1px;
+		border-style: solid;
+		border-color: #CCC;
+	}
+
+	#perfilcol3{
+		margin: 20px 0 0 0;
+		width: 23%;
+	}
+	#perfilcol3 .profile-text{
+		border-radius: 25px;
+		background-color: white;
+		width: 130%;
+		min-height: 100px;
+	}
+	#perfilcol3 h2{
+		color: #0b498f;
+		font-size: 30px;
+		text-align: center;
+		transform: translateX(-10%);
+	}
+	#perfilfeed {
+		margin: 20px 0 0 0;
+		width: 50%;
+	}
+	#perfilfeed .post-bar{
+		background-color: white;
+		border-radius: 25px;
+		margin: 0 0 40px 0;
+	}
+	#perfilfeed .container{
+		background-color: #EEE;
+		border-style: solid;
+		border-width: 1px;
+		border-color: #DDD;
+	}
+	#perfilcommentnom h5{
+		font-size: 12px;
+		color: gray;
+		margin: -5px 0 0 0;
+	}
+	#perfilimgcomment .img-responsive{
+		height: 60px;
+		width: 60px;
+		border-radius: 100px;
+
+	}
+	#perfilimgcomment .about-img{
+		height: 60px;
+		width: 60px;
+		margin: -50px 0 0 -20px;
+	}
+	#perfilcommentrow1 {
+		height: 60px;
+		margin: -20px -50px 40px -115px;
+	}
+	#perfilcommentrow1 input{
+		margin: 30px 0 0 220px;
+	}
+	#perfilcommentnom {
+		margin: 0 0 0 -50px;
+	}
+	#perfilcommentcomment h3{
+		font-size: 15px;
+	}
+	#perfilcommentcomment h3::after{
+		content: '';
+		background: #DDD;
+		display: block;
+		height: 1px;
+		width: 482px;
+		transform: translateX(-3%);
+		margin: 5px auto;
+	}
+
+/* END PERFIL */
 @media (max-width:768px) {
 
-.profile-text>h1{
-    font-weight: 700;
-    font-size:16px;
-}
 
 .image-profile
 {
