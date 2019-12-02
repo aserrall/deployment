@@ -28,7 +28,7 @@
                             <span><i class="fa fa-clock-o"></i>{{p.0.creation_date}}</span>
                             <ul class="row">
                                 <div class="col"><a href="#" title=""><i class="fa fa-heart"></i></a> 150</div>
-								<div class="col"><a data-toggle="collapse" href="#perfilcommentcomment{{p.0.id}}" title=""><i class="fa fa-comment"></i></a> 20</div>
+								<div class="col"><a data-toggle="collapse" href="#perfilcommentcomment{{p.0.id}}" title=""><i class="fa fa-comment"></i></a> {{p.1|length}}</div>
 								<div class="col"><a href="#" title=""><i class="fa fa-share-alt"></i></a></div>
                             </ul>
                             <div class="collapse" id="perfilcommentcomment{{p.0.id}}">
@@ -41,7 +41,7 @@
 										<span><img src="images/clock.png" alt="">{{c.0.creation_date}}</span>
 										<p>{{c.0.content }}</p>
                                         <ul class="row">
-                                            <div class="col"><a data-toggle="collapse" href="#answercomment{{c.0.id}}" title=""><i class="fa fa-comment"></i></a> 20</div>
+                                            <div class="col"><a data-toggle="collapse" href="#answercomment{{c.0.id}}" title=""><i class="fa fa-comment"></i></a> {{c.1|length}}</div>
                                             <div class="col"><a data-toggle="collapse" href="#commentanswer{{c.0.id}}">Answer</a></div>
                                         </ul>
                                         <div class="collapse" id="answercomment{{c.0.id}}">
