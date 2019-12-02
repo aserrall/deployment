@@ -4,71 +4,76 @@
     <meta charset="UTF-8">
 </head>
 <body>
-{% extends "likeme/BaseLayout.html" %}
+{% extends "likeme/BasePerfil.html" %}
 {% load static %}
 
-<link rel="stylesheet"
-href="{% static 'css/style.css' %}" />
+{% block feed %}
 
-{% block content %}
-<div>
-    <div class="profile">
-        <img align="left" class="image-lg" src="https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/images/649694main_pia15417-43_full.jpg" alt="Profile image example"/>
-        <img align="left" class="image-profile thumbnail" src="{{user.photo.url}}"/>
-         <!--<img align="left" class="image-profile thumbnail" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"/>-->
+            <!--POSTS-->
+            <div class="md-col-6" id="perfilfeed">
+                <form action ="" method="POST">
+                    {% csrf_token %}
+                    <!--Escriure post-->
+                    <div id="perfilpost">
+                        <div class="row">
+                            <div class="about-img" id="perfilpostfoto"><img src="{{user.photo.url}}" class="img-responsive" alt=""></div>
+                            <textarea class="form-control" id="perfilposttext" name="content_post" rows="4" placeholder="Comenta..."></textarea>
+                        </div>
+                        <input type="submit" style="float:right" name="val" value="Post" align="right" id="perfilpostbutton">
+                    </div>
 
-        <div class="profile-text">
-            <h1>{{user.first_name}} {{user.last_name}}</h1>
-            {% if user.sex == 1 %}
-                <p>Home</p>
-            {% else %}
-                <p>Dona</p>
-            {% endif %}
-            <p>{{user.birth_date}}</p>
-        </div>
+                    <!--Visualitar posts-->
+                    {% for p in posts %}
+                        <div class="post-bar">
+                            <div class="row" id="perfilcommentrow1">
+                                <div class="about-img" id="perfilimgcomment"><img src="{{user.photo.url}}" class="img-responsive" alt=""></div>
+                                <div id="perfilcommentnom">
+                                    <h2>{{p.0.user_post}}</h2>
+                                </div>
+                            </div>
+                            <h4> {{ p.0.content }} </h4>
+                            <span><i class="fa fa-clock-o"></i>{{p.0.creation_date}}</span>
+                            <ul class="row">
+                                <div class="col"><a href="#" title=""><i class="fa fa-heart"></i></a> 150</div>
+                                <!-- Cal agafar el nombre de comentaris (size/len)-->
+								<div class="col"><a data-toggle="collapse" href="#perfilcommentcomment{{p.0.id}}" title=""><i class="fa fa-comment"></i></a> 20</div>
+								<div class="col"><a href="#" title=""><i class="fa fa-share-alt"></i></a></div>
+                            </ul>
+                            <div class="collapse" id="perfilcommentcomment{{p.0.id}}">
+                                <input type="text" name="content_comment-{{p.0.id}}">
+                                <button class="btn btn-primary" id="post_id" type="submit" name="comment_value" value={{p.0.id}}> Comment</button>
+                                <h3> Comentaris </h3>
+                                {% for c in p.1 %} <!-- [(C,[])]-->
+                                    <div class="comment">
+                                         <h3>{{c.0.user_post}}</h3>
+										<span><img src="images/clock.png" alt="">{{c.0.creation_date}}</span>
+										<p>{{c.0.content }}</p>
+                                        <ul class="row">
+                                            <div class="col"><a data-toggle="collapse" href="#answercomment{{c.0.id}}" title=""><i class="fa fa-comment"></i></a> 20</div>
+                                            <div class="col"><a data-toggle="collapse" href="#commentanswer{{c.0.id}}">Answer</a></div>
+                                        </ul>
+                                        <div class="collapse" id="answercomment{{c.0.id}}">
+                                            <h3>Replies</h3>
+                                            {% for r in c.1 %}
+                                                <h8>{{ r.user_post}}</h8>
+                                                <span><img src="images/clock.png" alt="">{{r.creation_date}}</span>
+                                                <h6>{{r.content }} </h6>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="collapse" id="commentanswer{{c.0.id}}">
+                                            <h8>
+                                                <input type="text" id="content_reply-{{c.0.id}}">
+                                                <button class="btn btn-primary" id="comment_id" type="submit" name="reply_value" value={{c.0.id}}> Reply</button>
+                                            </h8>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </form>
+            </div>
 
-        POSTS
-<form action ="" method="POST">
-    {% csrf_token %}
-
-    {% for p in posts %}
-
-
-    <h1>POST:</h1><h8>Posted By: {{ p.0.user_post}}</h8>
-    <h2><pre>{{ p.0.content }} </pre></h2>
-
-    <input type="text" name="content_comment-{{p.0.id}}">
-    <button class="btn btn-primary" id="post_id" type="submit" name="comment_value" value={{p.0.id}}> Comment</button>
-
-        <h3> Comentaris </h3>
-        {% for c in p.1 %} <!-- [(C,[])]-->
-
-            <h8>Comment By: {{ c.0.user_post}}</h8>
-            <h6><pre>&#9{{c.0.content }} </pre></h6>
-
-
-
-            <h3>Replies
-                <h8>
-                <input type="text" name="content_reply-{{c.0.id}}">
-                <button class="btn btn-primary" id="comment_id" type="submit" name="reply_value" value={{c.0.id}}> Reply</button>
-            </h8></h3>
-            {% for r in c.1 %}
-                <h8>Reply By: {{ r.user_post}}</h8>
-                <h6><pre>&#9{{r.content }} </pre></h6>
-
-            {% endfor %}
-
-        {% endfor %}
-
-
-    {% endfor %}
-
-
-    </form>
-    </div>
-
-</div>
 {% endblock %}
 </body>
 </html>
