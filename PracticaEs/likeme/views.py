@@ -185,6 +185,7 @@ def search_users(request):
 
 def mirarPerfil(request, email):
     if request.method == "POST":
+
         if request.POST['val'] == "Post":
             Posteig.objects.create(content=request.POST['content_post'], user_post=request.user)
         try:

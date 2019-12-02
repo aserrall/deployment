@@ -133,7 +133,7 @@ div {
 
 	#barraperfil{
 		transform: translateY(-120%);
-		align-content: end;
+
 	}
 	#barraperfil .col-md-2{
 		transform: translateX(150%);
