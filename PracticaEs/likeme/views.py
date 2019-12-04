@@ -64,12 +64,18 @@ def forum(request):
             except:
                 pass
         elif "like_value" in request.POST:
+            id = request.POST['like_value']
             try:
-                id = request.POST['like_value']
                 pr = Posteig.objects.get(id=id)
-                Like.objects.create(post_id=pr, user_like=request.user)
+                try:
+                    liked = Like.objects.get(user_like=request.user, post_id=pr)
+                    liked.delete()
+                except (KeyError, Like.DoesNotExist, AttributeError):
+                    Like.objects.create(post_id=pr, user_like=request.user)
             except:
                 pass
+
+
 
     l = []
 
