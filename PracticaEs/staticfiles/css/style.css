@@ -6,6 +6,7 @@ body, html {
 	font-weight: 300;
 	width: 100% !important;
 	height: 100% !important;
+	background-color: #E0E0FF;
 }
 h1 {
 	margin: 0 0 20px 0;
@@ -82,8 +83,12 @@ div {
 
 
 /* Body */
+.full-height {
+  height: 92%;
+}
 #cuerpo {
 	background-color: #E0E0FF;
+	min-height: fit-content;
 }
 
 /* PERFIL */

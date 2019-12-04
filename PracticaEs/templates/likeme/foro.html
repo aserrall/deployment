@@ -12,7 +12,7 @@
                             <div class="about-img" id="perfilpostfoto"><img src="{{user.photo.url}}" class="img-responsive" alt=""></div>
                             <textarea class="form-control" id="perfilposttext" name="content_post" rows="4" placeholder="Comenta..."></textarea>
                         </div>
-                        <input type="submit" style="float:right" name="val" value="Post" align="right" id="perfilpostbutton">
+                        <input type="submit" style="float:right" name="post_value" value="Post" align="right" id="perfilpostbutton">
                     </div>
 
                     <!--Visualitar posts-->
@@ -28,6 +28,7 @@
                             <span><i class="fa fa-clock-o"></i>{{p.0.creation_date}}</span>
                             <ul class="row">
                                 <div class="col"><a href="#" title=""><i class="fa fa-heart"></i></a> 150</div>
+                                <!-- Cal agafar el nombre de comentaris (size/len) i no tinc ni idea de com fer-ho, la tupla és a {{p.1}} pero nse com mirar-ne la mida -->
 								<div class="col"><a data-toggle="collapse" href="#perfilcommentcomment{{p.0.id}}" title=""><i class="fa fa-comment"></i></a> {{p.1|length}}</div>
 								<div class="col"><a href="#" title=""><i class="fa fa-share-alt"></i></a></div>
                             </ul>
