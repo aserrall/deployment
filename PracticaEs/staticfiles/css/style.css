@@ -179,6 +179,15 @@ div {
 		border-radius: 25px;
 		margin-bottom: 40px;
 	}
+
+    #post_like{
+        background-color: white;
+        color: #007bff;
+        border: none;
+        margin: -3px -12px 0 0;
+
+    }
+
 	#perfilpostfoto{
 		height: 60px;
 		width: 60px;

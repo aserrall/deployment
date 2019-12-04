@@ -63,10 +63,15 @@ def forum(request):
                 Reply.objects.create(content=request.POST['content_reply-'+id], user_post=request.user, posteig_id=c)
             except:
                 pass
+        elif "like_value" in request.POST:
+            try:
+                id = request.POST['like_value']
+                pr = Posteig.objects.get(id=id)
+                Like.objects.create(post_id=pr, user_like=request.user)
+            except:
+                pass
 
     l = []
-
-    #posts = Posteig.objects.filter().all()
 
     freq_current_friends = FriendShip.objects.filter(Q(user_sender=request.user, accepted=True)
                                                     | Q(user_receiver=request.user, accepted=True))
@@ -74,13 +79,14 @@ def forum(request):
 
     posts = Posteig.objects.filter(user_post__in=friends).exclude(user_post=request.user)
 
-    # [ [P1, [(c,R)] ], P2, PN]
+    # [ [P1, [(c,R)], L1 ], P2, PN]
     # [ (P1, [(C1,[R]), (C1,[R])] ) ]
 
     for p in posts:
         comments = Comments.objects.filter(posteig_id=p.id)
+        likes = Like.objects.filter(post_id=p.id)
         tr = [(q, Reply.objects.filter(posteig_id=q)) for q in comments]
-        t = (p, tr)
+        t = (p, tr, likes)
         l.append(t)
 
     context = {
@@ -222,14 +228,22 @@ def mirarPerfil(request, email):
                 Reply.objects.create(content=request.POST['content_reply-'+id], user_post=request.user, posteig_id=c)
             except:
                 pass
+        elif "like_value" in request.POST:
+            try:
+                id = request.POST['like_value']
+                pr = Posteig.objects.get(id=id)
+                Like.objects.create(post_id=pr, user_like=request.user)
+            except:
+                pass
     try:
         l = []
         u = User.objects.get(email=email)
         posts = Posteig.objects.filter(user_post=u).order_by('-creation_date')
         for p in posts:
             comments = Comments.objects.filter(posteig_id=p.id)
+            likes = Like.objects.filter(post_id=p.id)
             tr = [(q, Reply.objects.filter(posteig_id=q)) for q in comments]
-            t = (p, tr)
+            t = (p, tr, likes)
             l.append(t)
 
         context = {
