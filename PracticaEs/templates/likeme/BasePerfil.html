@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+{% extends "likeme/BaseLayout.html" %}
+{% load static %}
+
+{% block content %}
+<div>
+    <div class="profile">
+        <img align="left" class="image-lg" src="https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/images/649694main_pia15417-43_full.jpg" alt="Profile image example"/>
+        <img align="left" class="image-profile thumbnail" src="{{user.photo.url}}"/>
+         <!--<img align="left" class="image-profile thumbnail" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"/>-->
+
+        <!--BARRA SUPERIOR-->
+        <div id="userinfo">
+            <div class="profile-text">
+                <h5>{{client.first_name}} {{client.last_name}}</h5>
+            </div>
+            <div class="row" id="barraperfil">
+                <div class="col-md-2">
+                    <a href="#">Informació</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="#">Fotos</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="{% url 'friends'%}" id="amcs">Amics</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="#">Missatges</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--LATERAL ESQUERRA-->
+            <div class="md-col-3" id="informacioperfil">
+                <div class="profile-text">
+                    <h2>Presentació</h2>
+                    {% if client.sex == 1 %}
+                        <p>Home</p>
+                    {% else %}
+                        <p>Dona</p>
+                    {% endif %}
+                    <p>{{client.birth_date}}</p>
+                </div>
+                <div class="profile-text">
+                    <h2>Xarxes</h2>
+                    <h4><i class="fab fa-youtube"></i></h4>
+                    <h4><i class="fab fa-linkedin"></i></h4>
+                    <h4><i class="fab fa-twitter-square"></i></h4>
+                </div>
+            </div>
+
+            {% block feed %}
+            {% endblock %}
+
+
+            <div class="md-col-3" id="perfilcol3">
+                <div class="profile-text">
+                    <h2>Fotos</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

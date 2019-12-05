@@ -6,14 +6,11 @@
 </head>
 <body>
 
-{% extends "likeme/BaseLayout.html" %}
+{% extends "likeme/BasePerfil.html" %}
 {% load static %}
 
-<link rel="stylesheet"
-href="{% static 'css/style.css' %}" />
-
-{% block content %}
-
+{% block feed %}
+<div class="md-col-6" id="perfilfeed">
     <h1> Friends: </h1>
     {% if freq_current_friends %}
         {% for f_req in freq_current_friends %}
@@ -92,7 +89,7 @@ href="{% static 'css/style.css' %}" />
     {% else %}
         <p> You have no pending requests! </p>
     {% endif %}
-
+</div>
 
 {% endblock %}
 

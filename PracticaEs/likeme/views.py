@@ -63,21 +63,36 @@ def forum(request):
                 Reply.objects.create(content=request.POST['content_reply-'+id], user_post=request.user, posteig_id=c)
             except:
                 pass
+        elif "like_value" in request.POST:
+            id = request.POST['like_value']
+            try:
+                pr = Posteig.objects.get(id=id)
+                try:
+                    liked = Like.objects.get(user_like=request.user, post_id=pr)
+                    liked.delete()
+                except (KeyError, Like.DoesNotExist, AttributeError):
+                    Like.objects.create(post_id=pr, user_like=request.user)
+            except:
+                pass
+
+
 
     l = []
 
     freq_current_friends = FriendShip.objects.filter(Q(user_sender=request.user, accepted=True)
-                                                     | Q(user_receiver=request.user, accepted=True))
+                                                    | Q(user_receiver=request.user, accepted=True))
     friends = [x.user_sender if x.user_sender != request.user else x.user_receiver for x in freq_current_friends]
 
     posts = Posteig.objects.filter(user_post__in=friends).exclude(user_post=request.user)
-    # [ [P1, [(c,R)]   ], P2, PN]
-    # [ (P1, [(C1,[R]), (C1,[R])])]
+
+    # [ [P1, [(c,R)], L1 ], P2, PN]
+    # [ (P1, [(C1,[R]), (C1,[R])] ) ]
 
     for p in posts:
         comments = Comments.objects.filter(posteig_id=p.id)
+        likes = Like.objects.filter(post_id=p.id)
         tr = [(q, Reply.objects.filter(posteig_id=q)) for q in comments]
-        t = (p, tr)
+        t = (p, tr, likes)
         l.append(t)
 
     context = {
@@ -202,6 +217,8 @@ def search_users(request):
 
 def mirarPerfil(request, email):
     if request.method == "POST":
+        if "post_value" in request.POST:
+            Posteig.objects.create(content=request.POST['content_post'], user_post=request.user)
         if "comment_value" in request.POST:
             try:
                 id = request.POST['comment_value']
@@ -217,14 +234,22 @@ def mirarPerfil(request, email):
                 Reply.objects.create(content=request.POST['content_reply-'+id], user_post=request.user, posteig_id=c)
             except:
                 pass
+        elif "like_value" in request.POST:
+            try:
+                id = request.POST['like_value']
+                pr = Posteig.objects.get(id=id)
+                Like.objects.create(post_id=pr, user_like=request.user)
+            except:
+                pass
     try:
         l = []
         u = User.objects.get(email=email)
         posts = Posteig.objects.filter(user_post=u).order_by('-creation_date')
         for p in posts:
             comments = Comments.objects.filter(posteig_id=p.id)
+            likes = Like.objects.filter(post_id=p.id)
             tr = [(q, Reply.objects.filter(posteig_id=q)) for q in comments]
-            t = (p, tr)
+            t = (p, tr, likes)
             l.append(t)
 
         context = {
