@@ -82,7 +82,7 @@ def forum(request):
                                                     | Q(user_receiver=request.user, accepted=True))
     friends = [x.user_sender if x.user_sender != request.user else x.user_receiver for x in freq_current_friends]
 
-    posts = Posteig.objects.filter(user_post__in=friends).exclude(user_post=request.user)
+    posts = Posteig.objects.filter(user_post__in=friends).exclude(user_post=request.user).order_by('-creation_date')
 
     # [ [P1, [(c,R)], L1 ], P2, PN]
     # [ (P1, [(C1,[R]), (C1,[R])] ) ]
@@ -234,12 +234,18 @@ def mirarPerfil(request, email):
             except:
                 pass
         elif "like_value" in request.POST:
+            id = request.POST['like_value']
             try:
-                id = request.POST['like_value']
                 pr = Posteig.objects.get(id=id)
-                Like.objects.create(post_id=pr, user_like=request.user)
+                try:
+                    liked = Like.objects.get(user_like=request.user, post_id=pr)
+                    liked.delete()
+                except (KeyError, Like.DoesNotExist, AttributeError):
+                    Like.objects.create(post_id=pr, user_like=request.user)
             except:
                 pass
+
+
     try:
         l = []
         u = User.objects.get(email=email)
