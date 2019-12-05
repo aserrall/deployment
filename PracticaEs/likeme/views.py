@@ -43,7 +43,6 @@ def register(request):
 @login_required()
 def forum(request):
     context = {}
-
     if request.method == 'POST':
 
         if "post_value" in request.POST:
