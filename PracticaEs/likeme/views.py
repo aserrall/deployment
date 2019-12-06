@@ -73,7 +73,15 @@ def forum(request):
                     Like.objects.create(post_id=pr, user_like=request.user)
             except:
                 pass
-
+        elif "delete_value" in request.POST:
+            id = request.POST['delete_value']
+            Posteig.objects.filter(id=id).delete()
+        elif "deleteComment_value" in request.POST:
+            id = request.POST['deleteComment_value']
+            Comments.objects.filter(id=id).delete()
+        elif "deleteReply_value" in request.POST:
+            id = request.POST['deleteReply_value']
+            Reply.objects.filter(id=id).delete()
 
 
     l = []
@@ -240,6 +248,16 @@ def mirarPerfil(request, email):
                 Like.objects.create(post_id=pr, user_like=request.user)
             except:
                 pass
+        elif "delete_value" in request.POST:
+            id = request.POST['delete_value']
+            Posteig.objects.filter(id=id).delete()
+        elif "deleteComment_value" in request.POST:
+            id = request.POST['deleteComment_value']
+            Comments.objects.filter(id=id).delete()
+        elif "deleteReply_value" in request.POST:
+            id = request.POST['deleteReply_value']
+            Reply.objects.filter(id=id).delete()
+
     try:
         l = []
         u = User.objects.get(email=email)
