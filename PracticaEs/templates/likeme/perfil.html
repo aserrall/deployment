@@ -9,6 +9,25 @@
 
 {% block feed %}
 
+           {% if client == request.user %}
+               <form action ="" method ="POST">
+               {% csrf_token %}
+                  <p> perfil public/privat </p>
+                  {% if user.profile_state == 1 %}
+                          <input type="radio" name="profile_status" value="privat" checked="checked"> Privat <br>
+                          <input type="radio" name="profile_status" value="public"> Public <br>
+                          <button class="btn btn-primary" id="status_btn" type="submit" name="status_btn">Seleccionar</button>
+                  {% else %}
+                          <input type="radio" name="profile_status" value="privat"> Privat <br>
+                          <input type="radio" name="profile_status" value="public" checked="checked"> Public <br>
+                          <button class="btn btn-primary" id="status_btn" type="submit" name="status_btn">Seleccionar</button>
+                  {% endif %}
+
+
+               </form>
+           {% endif %}             
+
+
             <!--POSTS-->
             <div class="md-col-6" id="perfilfeed">
                 <form action ="" method="POST">

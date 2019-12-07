@@ -257,6 +257,16 @@ def mirarPerfil(request, email):
         elif "deleteReply_value" in request.POST:
             id = request.POST['deleteReply_value']
             Reply.objects.filter(id=id).delete()
+        elif "profile_status" in request.POST:
+            u = LikeMeUser.objects.get(email=email)
+            if u.profile_state == 1 and request.POST['profile_status']== "public":
+                u.profile_state = 0
+                u.save()
+            elif u.profile_state == 0 and request.POST['profile_status']== "privat":
+                u.profile_state = 1
+                u.save()
+
+
 
     try:
         l = []
@@ -269,10 +279,31 @@ def mirarPerfil(request, email):
             t = (p, tr, likes)
             l.append(t)
 
-        context = {
-            'client': u,
-            'posts': l
-        }
+        freq_current_friends = FriendShip.objects.filter(Q(user_sender=request.user, accepted=True)
+                                                    | Q(user_receiver=request.user, accepted=True))
+        friends = [x.user_sender if x.user_sender != request.user else x.user_receiver for x in freq_current_friends]
+        
+        aut = False
+
+        u = LikeMeUser.objects.get(email=email)
+        if u.profile_state == 0:
+            aut = True
+        elif u == request.user:
+            aut = True
+        elif u.profile_state == 1:
+            if u in friends:
+                aut = True
+            else:
+                aut = False
+
+        if aut:
+            context = {
+
+                'client': u,
+                'posts': l
+            }
+        else:
+            context = {}
     except:
         context = {}
 
