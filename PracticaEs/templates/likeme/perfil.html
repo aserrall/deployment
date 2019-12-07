@@ -34,6 +34,10 @@
                             <h4> {{ p.0.content }} </h4>
                             <span><i class="fa fa-clock-o"></i>{{p.0.creation_date}}</span>
                             <ul class="row">
+				    
+				  {% if p.0.user_post == request.user %}
+				    <button class="btn btn-primary" id="post_delete" type="submit" name="delete_value" value={{p.0.id}}>esborrar</button>
+				  {% endif %}
                                  <div class="col"><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value={{p.0.id}}><i class="fa fa-heart"></i></button> {{p.2|length}}</div>
                                 <!-- Cal agafar el nombre de comentaris (size/len) i no tinc ni idea de com fer-ho, la tupla és a {{p.1}} pero nse com mirar-ne la mida -->
 								<div class="col"><a data-toggle="collapse" href="#perfilcommentcomment{{p.0.id}}" title=""><i class="fa fa-comment"></i></a> {{p.1|length}} </div>
@@ -46,6 +50,10 @@
                                 {% for c in p.1 %} <!-- [(C,[])]-->
                                     <div class="comment">
                                          <h3>{{c.0.user_post}}</h3>
+					 {% if c.0.user_post == request.user %}
+                                             <button class="btn btn-primary" id="comment_delete" type="submit" name="deleteComment_value" value={{c.0.id}}>esborrar</button>
+                                         {% endif %}
+
 										<span><img src="images/clock.png" alt="">{{c.0.creation_date}}</span>
 										<p>{{c.0.content }}</p>
                                         <ul class="row">
@@ -58,6 +66,10 @@
                                                 <h8>{{ r.user_post}}</h8>
                                                 <span><img src="images/clock.png" alt="">{{r.creation_date}}</span>
                                                 <h6>{{r.content }} </h6>
+
+						{% if r.user_post == request.user %}
+                                                    <button class="btn btn-primary" id="reply_delete" type="submit" name="deleteReply_value" value={{r.id}}>esborrar</button>
+                                                {% endif %}
                                             {% endfor %}
                                         </div>
                                         <div class="collapse" name="commentanswer{{c.0.id}}">
