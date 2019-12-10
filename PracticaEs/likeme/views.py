@@ -98,8 +98,10 @@ def forum(request):
     for p in posts:
         comments = Comments.objects.filter(posteig_id=p.id)
         likes = Like.objects.filter(post_id=p.id)
+        user_likes = [x.user_like for x in likes]
+
         tr = [(q, Reply.objects.filter(posteig_id=q)) for q in comments]
-        t = (p, tr, likes)
+        t = (p, tr, likes, user_likes)
         l.append(t)
 
     context = {
