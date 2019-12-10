@@ -33,8 +33,6 @@
 
                 <div class="col"><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value={{p.0.id}}><i class="fa fa-heart"></i></button>
 
-
-
                         <!-- Button trigger modal -->
                         <a href="#" type="text" data-toggle="modal" data-target="#exampleModalLong{{p.0.id}}">
                             {% if request.user in p.3 %}
@@ -42,7 +40,6 @@
                             {% else %}
                                 {{p.2|length}} users
                             {% endif %}
-
                         </a>
 
                         <!-- Modal -->
@@ -63,18 +60,7 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
-
                 </div>
-
-
-
-
-
 
                 <!-- Cal agafar el nombre de comentaris (size/len) i no tinc ni idea de com fer-ho, la tupla és a {{p.1}} pero nse com mirar-ne la mida -->
                 <div class="col"><a data-toggle="collapse" href="#perfilcommentcomment{{p.0.id}}" title=""><i class="fa fa-comment"></i></a> {{p.1|length}}</div>

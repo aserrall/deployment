@@ -244,10 +244,14 @@ def mirarPerfil(request, email):
             except:
                 pass
         elif "like_value" in request.POST:
+            id = request.POST['like_value']
             try:
-                id = request.POST['like_value']
                 pr = Posteig.objects.get(id=id)
-                Like.objects.create(post_id=pr, user_like=request.user)
+                try:
+                    liked = Like.objects.get(user_like=request.user, post_id=pr)
+                    liked.delete()
+                except (KeyError, Like.DoesNotExist, AttributeError):
+                    Like.objects.create(post_id=pr, user_like=request.user)
             except:
                 pass
         elif "delete_value" in request.POST:
@@ -277,8 +281,9 @@ def mirarPerfil(request, email):
         for p in posts:
             comments = Comments.objects.filter(posteig_id=p.id)
             likes = Like.objects.filter(post_id=p.id)
+            user_likes = [x.user_like for x in likes]
             tr = [(q, Reply.objects.filter(posteig_id=q)) for q in comments]
-            t = (p, tr, likes)
+            t = (p, tr, likes, user_likes)
             l.append(t)
 
         freq_current_friends = FriendShip.objects.filter(Q(user_sender=request.user, accepted=True)
