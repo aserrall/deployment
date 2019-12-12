@@ -56,7 +56,7 @@ class LikeMeUser(AbstractBaseUser):
     birth_date = models.DateTimeField(default=timezone.now)
     phone_number = models.TextField(default=0)
     photo = models.ImageField(upload_to='profiles/', default='profiles/profile_default.png')
-    profile_state = models.IntegerField(default = 0)
+    profile_state = models.IntegerField(default=0)
 
     join_date = models.DateTimeField(verbose_name='join date', auto_now_add=True)
 
@@ -149,3 +149,6 @@ class Like(models.Model):
     id = models.AutoField(primary_key=True)
     post_id = models.ForeignKey(Posteig, on_delete=models.CASCADE)
     user_like = models.ForeignKey(User, on_delete=models.CASCADE)
+    like_type = models.CharField(max_length=200, default="1")
+
+

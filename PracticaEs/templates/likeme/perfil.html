@@ -49,18 +49,67 @@
                                 <div id="perfilcommentnom">
                                     <h2>{{p.0.user_post}}</h2>
                                 </div>
+
                             </div>
                             <h4> {{ p.0.content }} </h4>
                             <span><i class="fa fa-clock-o"></i>{{p.0.creation_date}}</span>
                             <ul class="row">
 				    
-				  {% if p.0.user_post == request.user %}
-				    <button class="btn btn-primary" id="post_delete" type="submit" name="delete_value" value={{p.0.id}}>esborrar</button>
-				  {% endif %}
-                                 <div class="col"><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value={{p.0.id}}><i class="fa fa-heart"></i></button> {{p.2|length}}</div>
+
+
+                                <ul class="nav" id="post_reaction">
+                                    <div class="row">
+                                        <li><a href=""><i class="fas fa-theater-masks"></i></a>
+                                            <ul id="reaction_desplegable">
+                                                <li><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value="1{{p.0.id}}"><i class="fas fa-heart"></i></button></li>
+                                                <li><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value="2{{p.0.id}}"><i class="fas fa-thumbs-up"></i></button></li>
+                                                <li><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value="3{{p.0.id}}"><i class="fas fa-thumbs-down"></i></button></li>
+                                                <li><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value="4{{p.0.id}}"><i class="fas fa-heart-broken"></i></button></li>
+                                            </ul>
+                                        </li>
+                                        <button type="button" id="reactioncount" class="btn btn-primary" data-toggle="modal" data-target="#modal{{p.0.id}}">
+                                          {{p.2|length}}
+                                        </button>
+                                    </div>
+                                </ul>
+
+                                <div class="modal fade" id="modal{{p.0.id}}" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+
+                                                <h4 class="modal-title">Reaccions</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                {% for l in p.2 %}
+                                                    <div class="row">
+                                                        <h3>{{l.user_like}} </h3>
+                                                        {% if l.like_type == "1" %}
+                                                            <h3><i class="fas fa-heart"></i></h3>
+                                                        {% elif l.like_type == "2" %}
+                                                            <h3><i class="fas fa-thumbs-up"></i></h3>
+                                                        {% elif l.like_type == "3" %}
+                                                            <h3><i class="fas fa-thumbs-down"></i></h3>
+                                                        {% else %}
+                                                            <h3><i class="fas fa-heart-broken"></i></h3>
+                                                        {% endif %}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Tanca</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
                                 <!-- Cal agafar el nombre de comentaris (size/len) i no tinc ni idea de com fer-ho, la tupla és a {{p.1}} pero nse com mirar-ne la mida -->
-								<div class="col"><a data-toggle="collapse" href="#perfilcommentcomment{{p.0.id}}" title=""><i class="fa fa-comment"></i></a> {{p.1|length}} </div>
-								<div class="col"><a href="#" title=""><i class="fa fa-share-alt"></i></a></div>
+								<div class="col" id="postcomment"><a data-toggle="collapse" href="#perfilcommentcomment{{p.0.id}}" title=""><i class="fa fa-comment"></i></a> {{p.1|length}} </div>
+								{% if p.0.user_post == request.user %}
+                                    <button class="btn btn-primary" id="post_delete" type="submit" name="delete_value" value={{p.0.id}}><i class="fas fa-trash-alt"></i></button>
+                                {% endif %}
                             </ul>
                             <div class="collapse" id="perfilcommentcomment{{p.0.id}}">
                                 <input type="text" name="content_comment-{{p.0.id}}">
