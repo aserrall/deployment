@@ -188,6 +188,30 @@ div {
 
     }
 
+	#post_delete{
+        background-color: white;
+        color: #007bff;
+        border: none;
+        margin: -3px -12px 0 0;
+
+    }
+
+	#comment_delete{
+        background-color: white;
+        color: #007bff;
+        border: none;
+        margin: -3px -12px 0 0;
+
+    }
+
+    #reply_delete{
+        background-color: white;
+        color: #007bff;
+        border: none;
+        margin: -3px -12px 0 0;
+
+    }
+
 	#perfilpostfoto{
 		height: 60px;
 		width: 60px;
