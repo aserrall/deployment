@@ -19,6 +19,7 @@
             <div class="profile-text">
                 <h5>{{client.first_name}} {{client.last_name}}</h5>
             </div>
+
             <div class="row" id="barraperfil">
                 <div class="col-md-2">
                     <a href="#">Informació</a>
@@ -36,9 +37,24 @@
         </div>
         <div class="row">
             <!--LATERAL ESQUERRA-->
-            <div class="md-col-3" id="informacioperfil">
+            <div class="md-col-2" id="informacioperfil">
                 <div class="profile-text">
-                    <h2>Presentació</h2>
+                    {% if client == request.user %}
+                       <form action ="" method ="POST">
+                       {% csrf_token %}
+                          <p> perfil public/privat </p>
+                          {% if user.profile_state == 1 %}
+                                  <input type="radio" name="profile_status" value="privat" checked="checked"> Privat <br>
+                                  <input type="radio" name="profile_status" value="public"> Public <br>
+                                  <button class="btn btn-primary" id="status_btn" type="submit" name="status_btn">Seleccionar</button>
+                          {% else %}
+                                  <input type="radio" name="profile_status" value="privat"> Privat <br>
+                                  <input type="radio" name="profile_status" value="public" checked="checked"> Public <br>
+                                  <button class="btn btn-primary" id="status_btn" type="submit" name="status_btn">Seleccionar</button>
+                          {% endif %}
+                       </form>
+                    {% endif %}
+                    <!--INFO-->
                     {% if client.sex == 1 %}
                         <p>Home</p>
                     {% else %}
@@ -47,22 +63,13 @@
                     <p>{{client.birth_date}}</p>
                 </div>
                 <div class="profile-text">
-                    <h2>Xarxes</h2>
-                    <h4><i class="fab fa-youtube"></i></h4>
-                    <h4><i class="fab fa-linkedin"></i></h4>
-                    <h4><i class="fab fa-twitter-square"></i></h4>
+                    <h2>Fotos</h2>
                 </div>
             </div>
 
             {% block feed %}
             {% endblock %}
 
-
-            <div class="md-col-3" id="perfilcol3">
-                <div class="profile-text">
-                    <h2>Fotos</h2>
-                </div>
-            </div>
         </div>
     </div>
 </div>

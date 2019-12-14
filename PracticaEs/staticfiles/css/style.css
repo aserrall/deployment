@@ -188,6 +188,14 @@ div {
 
     }
 
+    #post_report{
+        background-color: white;
+        color: #007bff;
+        border: none;
+        margin: -3px -12px 0 0;
+
+    }
+
 	#post_delete{
         background-color: white;
         color: #007bff;

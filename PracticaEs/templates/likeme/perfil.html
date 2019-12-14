@@ -9,25 +9,6 @@
 
 {% block feed %}
 
-           {% if client == request.user %}
-               <form action ="" method ="POST">
-               {% csrf_token %}
-                  <p> perfil public/privat </p>
-                  {% if user.profile_state == 1 %}
-                          <input type="radio" name="profile_status" value="privat" checked="checked"> Privat <br>
-                          <input type="radio" name="profile_status" value="public"> Public <br>
-                          <button class="btn btn-primary" id="status_btn" type="submit" name="status_btn">Seleccionar</button>
-                  {% else %}
-                          <input type="radio" name="profile_status" value="privat"> Privat <br>
-                          <input type="radio" name="profile_status" value="public" checked="checked"> Public <br>
-                          <button class="btn btn-primary" id="status_btn" type="submit" name="status_btn">Seleccionar</button>
-                  {% endif %}
-
-
-               </form>
-           {% endif %}             
-
-
             <!--POSTS-->
             <div class="md-col-6" id="perfilfeed">
                 <form action ="" method="POST">
@@ -59,6 +40,8 @@
                                 <div class="col"><a data-toggle="collapse" href="#perfilcommentcomment{{p.0.id}}" title=""><i class="fa fa-comments"></i></a> {{p.1|length}} </div>
 								{% if p.0.user_post == request.user %}
                                     <div class="col"><button class="btn btn-primary" id="post_delete" type="submit" name="delete_value" value={{p.0.id}}><i class="fa fa-trash" aria-hidden="true"></i></button></div>
+                                {% else %}
+                                    <div class="col"><button class="btn-btn-primary" id="post_report" type="submit" name="report_value" value={{p.0.id}}><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></button></div>
                                 {% endif %}
                             </ul>
                             <div class="collapse" id="perfilcommentcomment{{p.0.id}}">
