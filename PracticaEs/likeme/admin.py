@@ -22,5 +22,7 @@ admin.site.register(Posteig)
 admin.site.register(Comments)
 admin.site.register(Reply)
 admin.site.register(Like)
+admin.site.register(Report)
+
 
 

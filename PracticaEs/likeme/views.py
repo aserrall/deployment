@@ -63,14 +63,16 @@ def forum(request):
             except:
                 pass
         elif "like_value" in request.POST:
-            id = request.POST['like_value']
+            aux = request.POST['like_value']
+            id = aux[1:]
+            type = aux[0:1]
             try:
                 pr = Posteig.objects.get(id=id)
                 try:
                     liked = Like.objects.get(user_like=request.user, post_id=pr)
                     liked.delete()
                 except (KeyError, Like.DoesNotExist, AttributeError):
-                    Like.objects.create(post_id=pr, user_like=request.user)
+                    Like.objects.create(post_id=pr, user_like=request.user, like_type=type)
             except:
                 pass
         elif "delete_value" in request.POST:
@@ -83,6 +85,12 @@ def forum(request):
             id = request.POST['deleteReply_value']
             Reply.objects.filter(id=id).delete()
 
+        elif "report_post" in request.POST:
+            id = request.POST['post_report_id']
+            report_message = request.POST['report_message']
+            pr = Posteig.objects.get(id=id)
+            user = request.user
+            Report.objects.create(post_id=pr, user_report=user, report_message=report_message)
 
     l = []
 
@@ -272,7 +280,12 @@ def mirarPerfil(request, email):
                 u.profile_state = 1
                 u.save()
 
-
+        elif "report_post" in request.POST:
+            id = request.POST['post_report_id']
+            report_message = request.POST['report_message']
+            pr = Posteig.objects.get(id=id)
+            user = request.user
+            Report.objects.create(post_id=pr, user_report=user, report_message=report_message)
 
     try:
         l = []

@@ -144,11 +144,14 @@ class Reply(models.Model):
     posteig_id = models.ForeignKey(Comments, on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
 
-
 class Like(models.Model):
     id = models.AutoField(primary_key=True)
     post_id = models.ForeignKey(Posteig, on_delete=models.CASCADE)
     user_like = models.ForeignKey(User, on_delete=models.CASCADE)
     like_type = models.CharField(max_length=200, default="1")
 
-
+class Report(models.Model):
+    id = models.AutoField(primary_key=True)
+    post_id = models.ForeignKey(Posteig, on_delete=models.CASCADE)
+    user_report = models.ForeignKey(User, on_delete=models.CASCADE)
+    report_message = models.CharField(max_length=200)

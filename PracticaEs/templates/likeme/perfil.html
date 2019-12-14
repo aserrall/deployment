@@ -9,151 +9,179 @@
 
 {% block feed %}
 
-           {% if client == request.user %}
-               <form action ="" method ="POST">
-               {% csrf_token %}
-                  <p> perfil public/privat </p>
-                  {% if user.profile_state == 1 %}
-                          <input type="radio" name="profile_status" value="privat" checked="checked"> Privat <br>
-                          <input type="radio" name="profile_status" value="public"> Public <br>
-                          <button class="btn btn-primary" id="status_btn" type="submit" name="status_btn">Seleccionar</button>
-                  {% else %}
-                          <input type="radio" name="profile_status" value="privat"> Privat <br>
-                          <input type="radio" name="profile_status" value="public" checked="checked"> Public <br>
-                          <button class="btn btn-primary" id="status_btn" type="submit" name="status_btn">Seleccionar</button>
-                  {% endif %}
+    {% if client == request.user %}
+        <form action ="" method ="POST">
+            {% csrf_token %}
+            <p> perfil public/privat </p>
+            {% if user.profile_state == 1 %}
+                <input type="radio" name="profile_status" value="privat" checked="checked"> Privat <br>
+                <input type="radio" name="profile_status" value="public"> Public <br>
+                <button class="btn btn-primary" id="status_btn" type="submit" name="status_btn">Seleccionar</button>
+            {% else %}
+                <input type="radio" name="profile_status" value="privat"> Privat <br>
+                <input type="radio" name="profile_status" value="public" checked="checked"> Public <br>
+                <button class="btn btn-primary" id="status_btn2" type="submit" name="status_btn">Seleccionar</button>
+            {% endif %}
 
 
-               </form>
-           {% endif %}             
+        </form>
+    {% endif %}
 
 
-            <!--POSTS-->
-            <div class="md-col-6" id="perfilfeed">
-                <form action ="" method="POST">
-                    {% csrf_token %}
-                    <!--Escriure post-->
-                    <div id="perfilpost">
-                        <div class="row">
-                            <div class="about-img" id="perfilpostfoto"><img src="{{user.photo.url}}" class="img-responsive" alt=""></div>
-                            <textarea class="form-control" id="perfilposttext" name="content_post" rows="4" placeholder="Comenta..."></textarea>
-                        </div>
-                        <input type="submit" style="float:right" name="post_value" value="Post" align="right" id="perfilpostbutton">
-                    </div>
-
-                    <!--Visualitar posts-->
-                    {% for p in posts %}
-                        <div class="post-bar">
-                            <div class="row" id="perfilcommentrow1">
-                                <div class="about-img" id="perfilimgcomment"><img src="{{user.photo.url}}" class="img-responsive" alt=""></div>
-                                <div id="perfilcommentnom">
-                                    <h2>{{p.0.user_post}}</h2>
-                                </div>
-
-                            </div>
-                            <h4> {{ p.0.content }} </h4>
-                            <span><i class="fa fa-clock-o"></i>{{p.0.creation_date}}</span>
-                            <ul class="row">
-				    
-
-
-                                <ul class="nav" id="post_reaction">
-                                    <div class="row">
-                                        <li><a href=""><i class="fas fa-theater-masks"></i></a>
-                                            <ul id="reaction_desplegable">
-                                                <li><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value="1{{p.0.id}}"><i class="fas fa-heart"></i></button></li>
-                                                <li><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value="2{{p.0.id}}"><i class="fas fa-thumbs-up"></i></button></li>
-                                                <li><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value="3{{p.0.id}}"><i class="fas fa-thumbs-down"></i></button></li>
-                                                <li><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value="4{{p.0.id}}"><i class="fas fa-heart-broken"></i></button></li>
-                                            </ul>
-                                        </li>
-                                        <button type="button" id="reactioncount" class="btn btn-primary" data-toggle="modal" data-target="#modal{{p.0.id}}">
-                                          {{p.2|length}}
-                                        </button>
-                                    </div>
-                                </ul>
-
-                                <div class="modal fade" id="modal{{p.0.id}}" tabindex="-1" role="dialog">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-
-                                                <h4 class="modal-title">Reaccions</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                {% for l in p.2 %}
-                                                    <div class="row">
-                                                        <h3>{{l.user_like}} </h3>
-                                                        {% if l.like_type == "1" %}
-                                                            <h3><i class="fas fa-heart"></i></h3>
-                                                        {% elif l.like_type == "2" %}
-                                                            <h3><i class="fas fa-thumbs-up"></i></h3>
-                                                        {% elif l.like_type == "3" %}
-                                                            <h3><i class="fas fa-thumbs-down"></i></h3>
-                                                        {% else %}
-                                                            <h3><i class="fas fa-heart-broken"></i></h3>
-                                                        {% endif %}
-                                                    </div>
-                                                {% endfor %}
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Tanca</button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-
-                                <!-- Cal agafar el nombre de comentaris (size/len) i no tinc ni idea de com fer-ho, la tupla és a {{p.1}} pero nse com mirar-ne la mida -->
-								<div class="col" id="postcomment"><a data-toggle="collapse" href="#perfilcommentcomment{{p.0.id}}" title=""><i class="fa fa-comment"></i></a> {{p.1|length}} </div>
-								{% if p.0.user_post == request.user %}
-                                    <button class="btn btn-primary" id="post_delete" type="submit" name="delete_value" value={{p.0.id}}><i class="fas fa-trash-alt"></i></button>
-                                {% endif %}
-                            </ul>
-                            <div class="collapse" id="perfilcommentcomment{{p.0.id}}">
-                                <input type="text" name="content_comment-{{p.0.id}}">
-                                <button class="btn btn-primary" id="post_id" type="submit" name="comment_value" value={{p.0.id}}> Comment</button>
-                                <h3> Comentaris </h3>
-                                {% for c in p.1 %} <!-- [(C,[])]-->
-                                    <div class="comment">
-                                         <h3>{{c.0.user_post}}</h3>
-					 {% if c.0.user_post == request.user %}
-                                             <button class="btn btn-primary" id="comment_delete" type="submit" name="deleteComment_value" value={{c.0.id}}>esborrar</button>
-                                         {% endif %}
-
-										<span><img src="images/clock.png" alt="">{{c.0.creation_date}}</span>
-										<p>{{c.0.content }}</p>
-                                        <ul class="row">
-                                            <div class="col"><a data-toggle="collapse" href="#answercomment{{c.0.id}}" title=""><i class="fa fa-comment"></i></a> {{c.1|length}}</div>
-                                            <div class="col"><a data-toggle="collapse" href="#commentanswer{{c.0.id}}">Answer</a></div>
-                                        </ul>
-                                        <div class="collapse" id="answercomment{{c.0.id}}">
-                                            <h3>Replies</h3>
-                                            {% for r in c.1 %}
-                                                <h8>{{ r.user_post}}</h8>
-                                                <span><img src="images/clock.png" alt="">{{r.creation_date}}</span>
-                                                <h6>{{r.content }} </h6>
-
-						{% if r.user_post == request.user %}
-                                                    <button class="btn btn-primary" id="reply_delete" type="submit" name="deleteReply_value" value={{r.id}}>esborrar</button>
-                                                {% endif %}
-                                            {% endfor %}
-                                        </div>
-                                        <div class="collapse" name="commentanswer{{c.0.id}}">
-                                            <h8>
-                                                <input type="text" id="content_reply-{{c.0.id}}">
-                                                <button class="btn btn-primary" id="comment_id" type="submit" name="reply_value" value={{c.0.id}}> Reply</button>
-                                            </h8>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                </form>
+    <!--POSTS-->
+    <div class="md-col-6" id="perfilfeed">
+        <form action ="" method="POST">
+            {% csrf_token %}
+            <!--Escriure post-->
+            <div id="perfilpost">
+                <div class="row">
+                    <div class="about-img" id="perfilpostfoto"><img src="{{user.photo.url}}" class="img-responsive" alt=""></div>
+                    <textarea class="form-control" id="perfilposttext" name="content_post" rows="4" placeholder="Comenta..."></textarea>
+                </div>
+                <input type="submit" style="float:right" name="post_value" value="Post" align="right" id="perfilpostbutton">
             </div>
 
+            <!--Visualitar posts-->
+            {% for p in posts %}
+                <div class="post-bar">
+                    <div class="row" id="perfilcommentrow1">
+                        <div class="about-img" id="perfilimgcomment"><img src="{{user.photo.url}}" class="img-responsive" alt=""></div>
+                        <div id="perfilcommentnom">
+                            <h2>{{p.0.user_post}}
+                                {% if p.0.user_post != request.user %}
+                                    <h2><h4> <a href="#" type="text" data-toggle="modal"
+                                                data-target="#exampleModal{{p.id}}" data-whatever="@mdo">Report post</a></h4></h2>
+
+                                    <div class="modal fade" id="exampleModal{{p.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Report post</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label for="recipient-name" class="col-form-label">Recipient:</label>
+                                                            <input type="text" class="form-control" id="recipient-name">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="message-text" class="col-form-label">Report Message:</label>
+                                                            <textarea class="form-control" id="message-text"></textarea>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary">Send message</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                {% endif %}
+                            </h2>
+                        </div>
+                    </div>
+                    <h4> {{ p.0.content }} </h4>
+                    <span><i class="fa fa-clock-o"></i>{{p.0.creation_date}}</span>
+                    <ul class="row">
+
+                        <ul class="nav" id="post_reaction">
+                            <div class="row">
+                                <li><a href=""><i class="fas fa-theater-masks"></i></a>
+                                    <ul id="reaction_desplegable">
+                                        <li><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value="1{{p.0.id}}"><i class="fas fa-heart"></i></button></li>
+                                        <li><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value="2{{p.0.id}}"><i class="fas fa-thumbs-up"></i></button></li>
+                                        <li><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value="3{{p.0.id}}"><i class="fas fa-thumbs-down"></i></button></li>
+                                        <li><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value="4{{p.0.id}}"><i class="fas fa-heart-broken"></i></button></li>
+                                    </ul>
+                                </li>
+                                <button type="button" id="reactioncount" class="btn btn-primary" data-toggle="modal" data-target="#modal{{p.0.id}}">
+                                    {{p.2|length}}
+                                </button>
+                            </div>
+                        </ul>
+
+                        <div class="modal fade" id="modal{{p.0.id}}" tabindex="-1" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <h4 class="modal-title">Reaccions</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        {% for l in p.2 %}
+                                            <div class="row">
+                                                <h3>{{l.user_like}} </h3>
+                                                {% if l.like_type == "1" %}
+                                                    <h3><i class="fas fa-heart"></i></h3>
+                                                {% elif l.like_type == "2" %}
+                                                    <h3><i class="fas fa-thumbs-up"></i></h3>
+                                                {% elif l.like_type == "3" %}
+                                                    <h3><i class="fas fa-thumbs-down"></i></h3>
+                                                {% else %}
+                                                    <h3><i class="fas fa-heart-broken"></i></h3>
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Tanca</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cal agafar el nombre de comentaris (size/len) i no tinc ni idea de com fer-ho, la tupla és a {{p.1}} pero nse com mirar-ne la mida -->
+                        <div class="col" id="postcomment"><a data-toggle="collapse" href="#perfilcommentcomment{{p.0.id}}" title=""><i class="fa fa-comment"></i></a> {{p.1|length}} </div>
+                        {% if p.0.user_post == request.user %}
+                            <button class="btn btn-primary" id="post_delete" type="submit" name="delete_value" value={{p.0.id}}><i class="fas fa-trash-alt"></i></button>
+                        {% endif %}
+                    </ul>
+                    <div class="collapse" id="perfilcommentcomment{{p.0.id}}">
+                        <input type="text" name="content_comment-{{p.0.id}}">
+                        <button class="btn btn-primary" id="post_id" type="submit" name="comment_value" value={{p.0.id}}> Comment</button>
+                        <h3> Comentaris </h3>
+                        {% for c in p.1 %} <!-- [(C,[])]-->
+                            <div class="comment">
+                                <h3>{{c.0.user_post}}</h3>
+                                <span><img src="images/clock.png" alt="">{{c.0.creation_date}}</span>
+                                <p>{{c.0.content }}</p>
+                                {% if c.0.user_post == request.user %}
+                                    <button class="btn btn-primary" id="comment_delete" type="submit" name="deleteComment_value" value={{c.0.id}}>esborrar</button>
+                                {% endif %}
+                                <ul class="row">
+                                    <div class="col"><a data-toggle="collapse" href="#answercomment{{c.0.id}}" title=""><i class="fa fa-comment"></i></a> {{c.1|length}}</div>
+                                    <div class="col"><a data-toggle="collapse" href="#commentanswer{{c.0.id}}">Answer</a></div>
+                                </ul>
+                                <div class="collapse" id="answercomment{{c.0.id}}">
+                                    <h3>Replies</h3>
+                                    {% for r in c.1 %}
+                                        <h8>{{ r.user_post}}</h8>
+                                        <span><img src="images/clock.png" alt="">{{r.creation_date}}</span>
+                                        <h6>{{r.content }} </h6>
+                                        {% if r.user_post == request.user %}
+                                            <button class="btn btn-primary" id="reply_delete" type="submit" name="deleteReply_value" value={{r.id}}>esborrar</button>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="collapse" id="commentanswer{{c.0.id}}">
+                                    <h8>
+                                        <input type="text" name="content_reply-{{c.0.id}}">
+                                        <button class="btn btn-primary" id="comment_id" type="submit" name="reply_value" value={{c.0.id}}> Reply</button>
+                                    </h8>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </form>
+    </div>
 {% endblock %}
+
 </body>
 </html>
