@@ -83,6 +83,12 @@ def forum(request):
             id = request.POST['deleteReply_value']
             Reply.objects.filter(id=id).delete()
 
+        elif "report_post" in request.POST:
+            id = request.POST['post_report_id']
+            report_message = request.POST['report_message']
+            pr = Posteig.objects.get(id=id)
+            user = request.user
+            Report.objects.create(post_id=pr, user_report=user, report_message=report_message)
 
     l = []
 
@@ -272,7 +278,12 @@ def mirarPerfil(request, email):
                 u.profile_state = 1
                 u.save()
 
-
+        elif "report_post" in request.POST:
+            id = request.POST['post_report_id']
+            report_message = request.POST['report_message']
+            pr = Posteig.objects.get(id=id)
+            user = request.user
+            Report.objects.create(post_id=pr, user_report=user, report_message=report_message)
 
     try:
         l = []

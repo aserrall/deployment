@@ -47,10 +47,10 @@
             <div class="row" id="perfilcommentrow1">
                 <div class="about-img" id="perfilimgcomment"><img src="{{user.photo.url}}" class="img-responsive" alt=""></div>
                 <div id="perfilcommentnom">
-                    <h2>
-                        {{p.0.user_post}}
-                        {% if p.0.user_post == request.user %}
-                        <button class="btn btn-primary" id="post_delete1" type="submit" name="delete_value" value={{p.0.id}}>Delete post</button>
+                    <h2>{{p.0.user_post}}
+                        {% if p.0.user_post != request.user %}
+                        <h2><h4> <a href="#" type="text" data-toggle="modal"
+                                                         data-target="#exampleModal{{p.id}}" data-whatever="@mdo">Report post</a></h4></h2>
                         {% endif %}
                     </h2>
                 </div>
@@ -58,6 +58,36 @@
             <h4> {{ p.0.content }} </h4>
             <span><i class="fa fa-clock-o"></i>{{p.0.creation_date}}</span>
             <ul class="row">
+
+            <div class="modal fade" id="exampleModal{{p.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Report post</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="col-form-label">Recipient:</label>
+                                                <input type="text" class="form-control" id="recipient-name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="message-text" class="col-form-label">Report Message:</label>
+                                                <textarea class="form-control" id="message-text"></textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Send message</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                 <div class="col"><button class="btn btn-primary" id="post_like" type="submit" name="like_value" value={{p.0.id}}><i class="fa fa-heart"></i></button>
 
                         <!-- Button trigger modal -->
