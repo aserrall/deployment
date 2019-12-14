@@ -188,6 +188,74 @@ div {
 
     }
 
+	#post_delete{
+		background-color: white;
+		color: red;
+		border: none;
+		height: 50%;
+		margin: 10px;
+	}
+
+	#post_reaction ul, ol {
+		list-style:none;
+	}
+
+	#reactioncount{
+		background-color: white;
+		border-color: white;
+		color: black;
+		width: 10px;
+		height: 2px;
+		margin-left: -10px;
+	}
+
+	#postcomment{
+		margin: 10px 0 0 50px;
+	}
+
+	#post_reaction li a {
+		background-color:#FFF;
+		color:#007bff;
+		text-decoration:none;
+		padding:10px;
+		display:block;
+
+	}
+	#reaction_desplegable li button{
+		margin-left: -40px;
+		padding: 10px;
+		border-top-color: #DDD;
+		border-top-style: solid;
+		border-top-width: 1px;
+		border-right-color: #DDD;
+		border-right-style: solid;
+		border-right-width: 1px;
+		border-left-color: #DDD;
+		border-left-style: solid;
+		border-left-width: 1px;
+	}
+
+	#post_reaction li a:hover {
+		background-color:#EEE;
+	}
+
+	#post_reaction li ul {
+		display:none;
+		position:absolute;
+	}
+
+	#post_reaction li:hover > ul {
+		display:block;
+	}
+
+	#post_reaction li ul li {
+		position:relative;
+	}
+
+	#post_reaction li ul li ul {
+		top:0px;
+	}
+
 	#perfilpostfoto{
 		height: 60px;
 		width: 60px;
