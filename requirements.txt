@@ -1,5 +1,5 @@
 certifi==2019.11.28
-Django==2.2.5
+Django==2.2.20
 django-widget-tweaks==1.4.5
 mock==3.0.5
 mypy==0.730
