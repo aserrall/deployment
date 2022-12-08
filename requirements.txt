@@ -1,4 +1,4 @@
-certifi==2019.11.28
+certifi==2022.12.7
 Django==2.2.5
 django-widget-tweaks==1.4.5
 mock==3.0.5
